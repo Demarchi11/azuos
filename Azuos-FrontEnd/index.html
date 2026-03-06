@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Azuos</title>
+    <style>
+        :root {
+            --azul-escuro: #073f62;
+            --azure: #2ca2b0;
+            --laranja: #f17c17;
+            --azure-vivido: #0e708e;
+            --azure-2: #1e84a6;
+            --texto-preto: #000000;
+            --texto-branco: #ffffff;
+            --fundo-claro: #e6ecef;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body, html {
+            height: 100%;
+            background: linear-gradient(135deg, var(--azure) 0%, var(--azure-2) 50%, var(--azure-vivido) 100%);
+            color: var(--texto-preto);
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            height: 80px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            height: 100%;
+        }
+
+        .logo-img {
+            margin-top: 100px;
+            width: 140px;
+            height: 150px;
+            margin-right: -10px;
+            z-index: 2;
+        }
+
+        .nav-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--fundo-claro);
+            height: 100%;
+            border-bottom-left-radius: 10px;
+            padding: 0 20px 0 30px;
+        }
+
+        .brand-name {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--azul-escuro);
+            text-transform: uppercase;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 50px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--texto-preto);
+            font-weight: 500;
+            font-size: 1.3rem;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--laranja);
+        }
+
+        .login-btn {
+            background-color: var(--azul-escuro);
+            color: var(--texto-branco);
+            border: none;
+            padding: 10px 40px;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background-color: var(--laranja);
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 70px);
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1.main-title {
+            font-size: 12rem;
+            font-weight: 600;
+            color: var(--laranja);
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            text-shadow: 0px 0px 15px var(--laranja);
+        }
+
+        .subtitle {
+            padding-top: 20px;
+            font-size: 1.6rem;
+            color: var(--texto-branco);
+            margin-bottom: 60px;
+            font-weight: 400;
+        }
+        .info-pill {
+            background-color: var(--fundo-claro);
+            color: var(--texto-preto);
+            padding: 15px 130px;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 500;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 60px;
+        }
+
+        /* Seta para baixo */
+        .scroll-arrow {
+            cursor: pointer;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-arrow svg {
+            width: 30px;
+            height: 50px;
+            stroke: var(--texto-branco);
+            stroke-width: 2;
+            fill: none;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-7px); }
+        }
+
+        @media (max-width: 768px) {
+            header { padding-right: 0; flex-direction: column; height: auto; }
+            .nav-container { flex-direction: column; border-radius: 0; padding: 15px; gap: 15px; }
+            nav ul { flex-direction: column; align-items: center; gap: 15px; }
+            h1.main-title { font-size: 4rem; }
+            .info-pill { font-size: 0.9rem; padding: 15px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <img class="logo-img" src="assets/icon.png" alt="Icone Azuos">
+        </div>
+        
+        <div class="nav-container">
+            <div class="brand-name">Plataforma Azuos</div>
+            <nav>
+                <ul>
+                    <li><a href="#quem-somos">Quem Somos?</a></li>
+                    <li><a href="#servicos">Nossos Serviços.</a></li>
+                    <li><a href="#contato">Entre em Contato!</a></li>
+                </ul>
+            </nav>
+            <button class="login-btn" onclick="window.location.href='pages/login.html'">Login</button>
+        </div>
+    </header>
+
+    <main>
+        <h1 class="main-title">AZUOS</h1>
+        <h2 class="subtitle">Capacitação de líderes éticos</h2>
+        
+        <div class="info-pill">
+            + Eficiência, produtividade e engajamento de líderes e funcionários.
+        </div>
+
+        <div class="scroll-arrow" onclick="rolarParaBaixo()">
+            <svg viewBox="0 0 24 40">
+                <line x1="12" y1="0" x2="12" y2="38"></line>
+                <polyline points="4,30 12,38 20,30"></polyline>
+            </svg>
+        </div>
+    </main>
+
+    <script>
+
+        function rolarParaBaixo() {
+            window.scrollBy({ 
+                top: window.innerHeight, 
+                behavior: 'smooth' 
+            });
+        }
+    </script>
+</body>
+</html>
