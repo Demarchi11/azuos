@@ -35,10 +35,9 @@
 ## Tecnologias
 
 ### Linguagens de Programação
-//Em manuntenção
-
-### Ferramentas & Tecnologias
-//Em manuntenção
+ - HTML, CSS e JS (para Front-End)
+ - Python com Flask (Para conexão com Banco de Dados)
+ - Postgresql com SUPABASE (Como Banco de Dados)
 
 
 **FIRJAN SENAI SESI - Petrópolis/RJ**  
