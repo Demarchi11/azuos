@@ -4,6 +4,9 @@
 
 ---
 
+**FIRJAN SENAI SESI - Petrópolis/RJ**  
+`2026`  
+
 ## Contextualização do projeto:
 - Na sociedade brasileira, observa-se o despreparo e a desqualificação de lideranças ligadas e alinhadas a um modelo de governança e gestão ética.
 - Essa problemática já é reconhecida e evidenciada pelas necessidades ESG de governança  corporativa. Ademais, o engajamento dos funcionários, segundo Relatório do Local de Trabalho 2025 do Gallup, depende cerca de 70 % da liderança e do engajamento do líder. 
@@ -24,11 +27,11 @@
 ---
 
 ## Participantes:
+- Gabriel Toledo Melo
 - João Victor Demarchi Leite
-- Gabriel Toledo de Melo
 - Mathias Basílio Hammes de Souza
 - Nicolas Esteves Caetano Moreira
-- Thiago Tesch Coelho
+- Thiago Coelho Tesch
 
 ---
 
@@ -45,15 +48,14 @@
 #### Banco de Dados
    - ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white) ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
 
-**FIRJAN SENAI SESI - Petrópolis/RJ**  
-`2023 - 2025`  
+
 
 ---
 
 
 <div align="center">
   <p>
-    Como dizia meu ilustre professor para aproveitar ao máximo o tempo de vida, pronunciando em cada dia:
+    Como dizia nosso ilustre professor para aproveitar ao máximo o tempo de vida, pronunciando em cada dia:
   </p>
 
   <p>
@@ -64,6 +66,3 @@
     – Luciano Moreira –
   </p>
 </div>
-
-
-
