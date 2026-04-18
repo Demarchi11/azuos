@@ -1,0 +1,212 @@
+{
+  "info": {
+    "name": "AzuOS - Perfil Ético API",
+    "description": "Trilha de requisições para validar a API. Execute na ordem: 1→2→3→...→10",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:5000" }
+  ],
+  "item": [
+    {
+      "name": "0. Health Check",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/api/health" },
+        "header": []
+      }
+    },
+    {
+      "name": "1. Criar Cargo",
+      "request": {
+        "method": "POST",
+        "url": { "raw": "{{base_url}}/api/cargos" },
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": 1\n}"
+        }
+      }
+    },
+    {
+      "name": "2. Listar Cargos",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/api/cargos" },
+        "header": []
+      }
+    },
+    {
+      "name": "3. Criar Departamento",
+      "request": {
+        "method": "POST",
+        "url": { "raw": "{{base_url}}/api/departamentos" },
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"Tecnologia\"\n}"
+        }
+      }
+    },
+    {
+      "name": "4. Listar Departamentos",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/api/departamentos" },
+        "header": []
+      }
+    },
+    {
+      "name": "5. Criar Usuário",
+      "request": {
+        "method": "POST",
+        "url": { "raw": "{{base_url}}/api/usuarios" },
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": \"João Silva\",\n  \"cpf\": \"12345678901\",\n  \"email\": \"joao@email.com\",\n  \"role_id\": 1,\n  \"senha\": \"123456\",\n  \"lider\": false,\n  \"departamento_id\": 1\n}"
+        }
+      }
+    },
+    {
+      "name": "6. Listar Usuários",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/api/usuarios" },
+        "header": []
+      }
+    },
+    {
+      "name": "7. Login",
+      "request": {
+        "method": "POST",
+        "url": { "raw": "{{base_url}}/api/auth/login" },
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"joao@email.com\",\n  \"senha\": \"123456\"\n}"
+        }
+      }
+    },
+    {
+      "name": "8. Criar Formulário",
+      "request": {
+        "method": "POST",
+        "url": { "raw": "{{base_url}}/api/formularios" },
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Avaliação Ética - Desenvolvedor\",\n  \"role_id\": 1\n}"
+        }
+      }
+    },
+    {
+      "name": "9. Criar Pergunta 1",
+      "request": {
+        "method": "POST",
+        "url": { "raw": "{{base_url}}/api/perguntas" },
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pergunta\": \"Você respeita prazos acordados com a equipe?\",\n  \"formulario_id\": 1,\n  \"pontuacao\": 10\n}"
+        }
+      }
+    },
+    {
+      "name": "10. Criar Pergunta 2",
+      "request": {
+        "method": "POST",
+        "url": { "raw": "{{base_url}}/api/perguntas" },
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pergunta\": \"Você comunica proativamente bloqueios e riscos?\",\n  \"formulario_id\": 1,\n  \"pontuacao\": 8\n}"
+        }
+      }
+    },
+    {
+      "name": "11. Criar Pergunta 3",
+      "request": {
+        "method": "POST",
+        "url": { "raw": "{{base_url}}/api/perguntas" },
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"pergunta\": \"Você aceita feedback construtivo de colegas?\",\n  \"formulario_id\": 1,\n  \"pontuacao\": 7\n}"
+        }
+      }
+    },
+    {
+      "name": "12. Ver Formulário com Perguntas",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/api/formularios/1" },
+        "header": []
+      }
+    },
+    {
+      "name": "13. Buscar Formulários por Cargo",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/api/formularios/por-cargo/1" },
+        "header": []
+      }
+    },
+    {
+      "name": "14. ⭐ Submeter Formulário (fluxo principal)",
+      "request": {
+        "method": "POST",
+        "url": { "raw": "{{base_url}}/api/submissoes" },
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"usuario_id\": 1,\n  \"formulario_id\": 1,\n  \"respostas\": [\n    {\"pergunta_id\": 1, \"resposta\": \"Sim, sempre cumpro os prazos\"},\n    {\"pergunta_id\": 2, \"resposta\": \"Informo a equipe assim que identifico um bloqueio\"},\n    {\"pergunta_id\": 3, \"resposta\": \"Sim, valorizo o feedback para crescer\"}\n  ]\n}"
+        }
+      }
+    },
+    {
+      "name": "15. Ver Submissão com Respostas",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/api/submissoes/1" },
+        "header": []
+      }
+    },
+    {
+      "name": "16. Ver Relatório da Submissão",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/api/relatorios/submissao/1" },
+        "header": []
+      }
+    },
+    {
+      "name": "17. Listar Submissões do Usuário",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/api/submissoes/usuario/1" },
+        "header": []
+      }
+    },
+    {
+      "name": "18. Atualizar Cargo",
+      "request": {
+        "method": "PUT",
+        "url": { "raw": "{{base_url}}/api/cargos/1" },
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"nome\": 2\n}"
+        }
+      }
+    },
+    {
+      "name": "19. Listar Todos os Relatórios",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "{{base_url}}/api/relatorios" },
+        "header": []
+      }
+    }
+  ]
+}
