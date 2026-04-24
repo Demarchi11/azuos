@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — Plataforma Azuos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --azure: #2ca2b0;
+            --azure-dark: #0e708e;
+            --laranja: #f17c17;
+            --azul-escuro: #073f62;
+            --bg: #07192a;
+            --surface: #0d2337;
+            --surface2: #112b40;
+            --border: rgba(255,255,255,0.08);
+            --text: #ffffff;
+            --text-muted: rgba(255,255,255,0.45);
+            --sidebar-w: 240px;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        html { scroll-behavior:smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ─── SIDEBAR ─── */
+        .sidebar {
+            width: var(--sidebar-w);
+            background: var(--surface);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            z-index: 50;
+            transition: transform .3s;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 24px 20px;
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+        }
+
+        .sidebar-logo img {
+            width: 36px; height: 36px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px rgba(241,124,23,.4));
+        }
+
+        .sidebar-logo-text {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1rem;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            color: white;
+        }
+
+        .sidebar-logo-text span { color: var(--laranja); }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 16px 12px;
+            overflow-y: auto;
+        }
+
+        .nav-section-label {
+            font-size: .62rem;
+            font-weight: 700;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            padding: 0 10px;
+            margin: 20px 0 8px;
+        }
+
+        .nav-section-label:first-child { margin-top: 0; }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: background .2s, color .2s;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: .875rem;
+            font-weight: 500;
+            margin-bottom: 2px;
+            position: relative;
+        }
+
+        .nav-item i {
+            width: 18px;
+            text-align: center;
+            font-size: .9rem;
+            flex-shrink: 0;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,.06);
+            color: white;
+        }
+
+        .nav-item.active {
+            background: rgba(44,162,176,.13);
+            color: var(--azure);
+            font-weight: 600;
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 20%; bottom: 20%;
+            width: 3px;
+            border-radius: 0 3px 3px 0;
+            background: var(--azure);
+        }
+
+        .nav-badge {
+            margin-left: auto;
+            background: var(--laranja);
+            color: white;
+            font-size: .62rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 20px;
+            letter-spacing: .02em;
+        }
+
+        .sidebar-footer {
+            padding: 16px 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: rgba(255,255,255,.04);
+            border: 1px solid var(--border);
+        }
+
+        .user-avatar {
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--azure-dark), var(--azure));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: .85rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .user-info { flex: 1; min-width: 0; }
+        .user-name { font-size: .82rem; font-weight: 600; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .user-role { font-size: .7rem; color: var(--text-muted); }
+
+        .logout-btn {
+            background: none; border: none; cursor: pointer;
+            color: var(--text-muted); font-size: .85rem;
+            padding: 4px; transition: color .2s;
+        }
+        .logout-btn:hover { color: #f5a0a0; }
+
+        /* ─── MAIN ─── */
+        .main {
+            margin-left: var(--sidebar-w);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* TOP BAR */
+        .topbar {
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            border-bottom: 1px solid var(--border);
+            background: rgba(7,25,42,.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 40;
+        }
+
+        .topbar-left h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .topbar-left p {
+            font-size: .78rem;
+            color: var(--text-muted);
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .topbar-btn {
+            background: var(--laranja);
+            color: white;
+            border: none;
+            padding: 9px 20px;
+            border-radius: 8px;
+            font-family: 'Syne', sans-serif;
+            font-size: .82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background .3s, box-shadow .3s;
+            letter-spacing: .04em;
+        }
+
+        .topbar-btn:hover { background: #d96a0a; box-shadow: 0 6px 20px rgba(241,124,23,.35); }
+
+        /* CONTENT */
+        .content {
+            padding: 32px;
+            flex: 1;
+        }
+
+        /* ─── SCORE HERO ─── */
+        .score-hero {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 32px;
+            background: linear-gradient(135deg, var(--surface2) 0%, rgba(14,112,142,.2) 100%);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 36px;
+            margin-bottom: 28px;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .score-hero::before {
+            content:''; position:absolute; top:-60px; right:-60px;
+            width:240px; height:240px;
+            background:radial-gradient(circle,rgba(44,162,176,.12),transparent 70%);
+            border-radius:50%; pointer-events:none;
+        }
+
+        .score-ring {
+            position: relative;
+            width: 140px; height: 140px;
+            flex-shrink: 0;
+        }
+
+        .score-ring svg {
+            width: 140px; height: 140px;
+            transform: rotate(-90deg);
+        }
+
+        .score-ring circle {
+            fill: none;
+            stroke-width: 10;
+            stroke-linecap: round;
+        }
+
+        .ring-bg  { stroke: rgba(255,255,255,.08); }
+        .ring-fill { stroke: var(--laranja); stroke-dasharray: 345; stroke-dashoffset: 86; transition: stroke-dashoffset 1.5s ease; }
+
+        .score-center {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .score-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem; font-weight: 800;
+            color: var(--laranja);
+            line-height: 1;
+        }
+
+        .score-label { font-size: .68rem; color: var(--text-muted); letter-spacing: .06em; text-transform: uppercase; }
+
+        .score-info h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem; font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .score-info p { font-size: .9rem; color: var(--text-muted); line-height: 1.6; max-width: 500px; margin-bottom: 20px; }
+
+        .score-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        .score-tag {
+            font-size: .72rem; font-weight: 600;
+            letter-spacing: .08em; text-transform: uppercase;
+            padding: 5px 12px; border-radius: 20px;
+        }
+
+        .tag-green  { background:rgba(52,199,89,.12);  border:1px solid rgba(52,199,89,.25);  color:#5de07a; }
+        .tag-orange { background:rgba(241,124,23,.12); border:1px solid rgba(241,124,23,.25); color:#f7a660; }
+        .tag-blue   { background:rgba(44,162,176,.12); border:1px solid rgba(44,162,176,.25); color:#7ecfe0; }
+
+        /* ─── STATS ROW ─── */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 20px 22px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: border-color .3s, transform .2s;
+        }
+
+        .stat-card:hover { border-color: rgba(44,162,176,.3); transform: translateY(-2px); }
+
+        .stat-icon {
+            width: 44px; height: 44px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; flex-shrink: 0;
+        }
+
+        .si-orange { background:rgba(241,124,23,.12); border:1px solid rgba(241,124,23,.2); }
+        .si-blue   { background:rgba(44,162,176,.12); border:1px solid rgba(44,162,176,.2); }
+        .si-green  { background:rgba(52,199,89,.12);  border:1px solid rgba(52,199,89,.2);  }
+        .si-purple { background:rgba(175,82,222,.12); border:1px solid rgba(175,82,222,.2); }
+
+        .stat-data .num {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.55rem; font-weight: 800;
+            line-height: 1; color: white;
+        }
+
+        .stat-data .lbl { font-size: .75rem; color: var(--text-muted); margin-top: 3px; }
+        .stat-data .delta { font-size: .72rem; color: #5de07a; margin-top: 2px; }
+        .stat-data .delta.neg { color: #f5a0a0; }
+
+        /* ─── GRID 2 COL ─── */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* ─── CARD ─── */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem; font-weight: 700;
+            color: white;
+        }
+
+        .card-link {
+            font-size: .78rem; color: var(--azure);
+            text-decoration: none; transition: color .2s;
+        }
+
+        .card-link:hover { color: #7ecfe0; }
+
+        /* ─── FORMULÁRIOS LIST ─── */
+        .form-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .form-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .form-row:first-child { padding-top: 0; }
+
+        .form-num {
+            width: 34px; height: 34px;
+            border-radius: 8px;
+            background: rgba(255,255,255,.05);
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Syne', sans-serif;
+            font-size: .8rem; font-weight: 700;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .form-info { flex: 1; min-width: 0; }
+        .form-info .fi-title { font-size: .88rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .form-info .fi-date  { font-size: .73rem; color: var(--text-muted); margin-top: 2px; }
+
+        .form-score {
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem; font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .form-score.good { color: #5de07a; }
+        .form-score.ok   { color: var(--laranja); }
+        .form-score.bad  { color: #f5a0a0; }
+
+        .form-badge {
+            font-size: .68rem; font-weight: 600;
+            padding: 3px 9px; border-radius: 20px;
+            letter-spacing: .05em; text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .fb-done    { background:rgba(52,199,89,.1);  border:1px solid rgba(52,199,89,.2);  color:#5de07a; }
+        .fb-pending { background:rgba(241,124,23,.1); border:1px solid rgba(241,124,23,.2); color:#f7a660; }
+
+        /* ─── TRILHAS ─── */
+        .trilha-item {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .trilha-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .trilha-item:first-child { padding-top: 0; }
+
+        .trilha-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+        .trilha-title  { font-size: .88rem; font-weight: 600; }
+        .trilha-pct    { font-family: 'Syne', sans-serif; font-size: .88rem; font-weight: 700; color: var(--azure); }
+
+        .progress-bar {
+            height: 6px;
+            background: rgba(255,255,255,.08);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--azure-dark), var(--azure));
+            transition: width 1.2s ease;
+        }
+
+        .progress-fill.orange { background: linear-gradient(90deg, #d96a0a, var(--laranja)); }
+        .progress-fill.green  { background: linear-gradient(90deg, #28a745, #5de07a); }
+
+        .trilha-meta { display: flex; gap: 12px; margin-top: 8px; }
+        .trilha-chip {
+            font-size: .68rem; font-weight: 600;
+            padding: 2px 8px; border-radius: 20px;
+            color: var(--text-muted);
+            background: rgba(255,255,255,.05);
+            border: 1px solid var(--border);
+        }
+
+        /* ─── IA INSIGHT ─── */
+        .insight-box {
+            background: linear-gradient(135deg, rgba(44,162,176,.1), rgba(14,112,142,.08));
+            border: 1px solid rgba(44,162,176,.2);
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 14px;
+        }
+
+        .insight-box:last-child { margin-bottom: 0; }
+
+        .insight-top {
+            display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+        }
+
+        .insight-icon {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            background: rgba(44,162,176,.15);
+            border: 1px solid rgba(44,162,176,.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: .85rem; flex-shrink: 0;
+        }
+
+        .insight-label { font-size: .72rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--azure); }
+        .insight-text  { font-size: .84rem; color: rgba(255,255,255,.7); line-height: 1.6; }
+
+        /* ─── RADAR SIMPLES ─── */
+        .radar-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 0;
+        }
+
+        /* ─── MINI CALENDAR / PRÓXIMOS ─── */
+        .next-item {
+            display: flex; gap: 14px; align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .next-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .next-item:first-child { padding-top: 0; }
+
+        .next-date {
+            width: 44px; height: 44px;
+            border-radius: 10px;
+            background: rgba(241,124,23,.1);
+            border: 1px solid rgba(241,124,23,.2);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .next-date .day { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 800; color: var(--laranja); line-height: 1; }
+        .next-date .mon { font-size: .6rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; }
+
+        .next-info .ni-title { font-size: .86rem; font-weight: 500; margin-bottom: 3px; }
+        .next-info .ni-sub   { font-size: .73rem; color: var(--text-muted); }
+
+        /* ─── MOBILE TOGGLE ─── */
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 16px; left: 16px;
+            z-index: 100;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            width: 40px; height: 40px;
+            align-items: center; justify-content: center;
+            cursor: pointer; color: white; font-size: 1rem;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,.5);
+            z-index: 45;
+        }
+
+        @media (max-width: 1024px) {
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .main { margin-left: 0; }
+            .mobile-toggle { display: flex; }
+            .overlay.show { display: block; }
+            .content { padding: 20px 16px; }
+            .topbar { padding: 0 16px 0 64px; }
+            .score-hero { grid-template-columns: 1fr; }
+            .score-ring { margin: 0 auto; }
+            .stats-row { grid-template-columns: repeat(2, 1fr); }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            .stats-row { grid-template-columns: 1fr; }
+        }
+
+        /* ─── ANIMATIONS ─── */
+        .fade-in {
+            opacity: 0;
+            animation: fadeUp .6s ease forwards;
+        }
+
+        @keyframes fadeUp {
+            from { opacity:0; transform:translateY(16px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+
+        .fade-in:nth-child(1) { animation-delay: .05s; }
+        .fade-in:nth-child(2) { animation-delay: .12s; }
+        .fade-in:nth-child(3) { animation-delay: .19s; }
+        .fade-in:nth-child(4) { animation-delay: .26s; }
+        .fade-in:nth-child(5) { animation-delay: .33s; }
+        .fade-in:nth-child(6) { animation-delay: .40s; }
+    </style>
+</head>
+<body>
+
+    <!-- MOBILE TOGGLE -->
+    <button class="mobile-toggle" id="mobileToggle" onclick="toggleSidebar()">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <!-- ─── SIDEBAR ─── -->
+    <aside class="sidebar" id="sidebar">
+        <a class="sidebar-logo" href="../index.html">
+            <img src="../assets/icon.png" alt="Azuos">
+            <span class="sidebar-logo-text">Plataforma <span>Azuos</span></span>
+        </a>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section-label">Principal</div>
+            <a class="nav-item active" href="dashboard.html">
+                <i class="fa-solid fa-gauge-high"></i> Visão Geral
+            </a>
+            <a class="nav-item" href="formulario.html">
+                <i class="fa-solid fa-clipboard-list"></i> Formulário
+                <span class="nav-badge">Novo</span>
+            </a>
+            <a class="nav-item" href="historico.html">
+                <i class="fa-solid fa-clock-rotate-left"></i> Histórico
+            </a>
+            <a class="nav-item" href="trilhas.html">
+                <i class="fa-solid fa-road"></i> Trilhas
+            </a>
+            <a class="nav-item" href="relatorios.html">
+                <i class="fa-solid fa-chart-bar"></i> Relatórios IA
+            </a>
+
+            <div class="nav-section-label">Gestão</div>
+            <a class="nav-item" href="equipe.html">
+                <i class="fa-solid fa-users"></i> Equipe
+            </a>
+            <a class="nav-item" href="empresa.html">
+                <i class="fa-solid fa-building"></i> Empresa
+            </a>
+
+            <div class="nav-section-label">Conta</div>
+            <a class="nav-item" href="configuracoes.html">
+                <i class="fa-solid fa-gear"></i> Configurações
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-card">
+                <div class="user-avatar" id="userAvatar">JD</div>
+                <div class="user-info">
+                    <div class="user-name" id="userName">João Demarchi</div>
+                    <div class="user-role" id="userRole">Gerente</div>
+                </div>
+                <button class="logout-btn" onclick="logout()" title="Sair">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ─── MAIN ─── -->
+    <div class="main">
+
+        <!-- TOP BAR -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <h1>Visão Geral</h1>
+                <p id="greetMsg">Bem-vindo de volta 👋</p>
+            </div>
+            <div class="topbar-right">
+                <button class="topbar-btn" onclick="window.location.href='formulario.html'">
+                    <i class="fa-solid fa-plus" style="margin-right:6px"></i> Novo Formulário
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTENT -->
+        <div class="content">
+
+            <!-- SCORE HERO -->
+            <div class="score-hero fade-in">
+                <div class="score-ring">
+                    <svg viewBox="0 0 120 120">
+                        <circle class="ring-bg"   cx="60" cy="60" r="55"/>
+                        <circle class="ring-fill" cx="60" cy="60" r="55" id="ringFill"/>
+                    </svg>
+                    <div class="score-center">
+                        <div class="score-num" id="scoreNum">75</div>
+                        <div class="score-label">/ 100</div>
+                    </div>
+                </div>
+                <div class="score-info">
+                    <h2>Nota Geral de Compliance Ético</h2>
+                    <p>Sua avaliação mais recente indica um nível <strong>intermediário</strong> de preparação para liderança inclusiva. Continue avançando na trilha de capacitação para melhorar sua nota.</p>
+                    <div class="score-tags">
+                        <span class="score-tag tag-green">Escuta Ativa ✓</span>
+                        <span class="score-tag tag-orange">Comunicação Inclusiva ⚡</span>
+                        <span class="score-tag tag-blue">ESG Alinhado</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATS ROW -->
+            <div class="stats-row">
+                <div class="stat-card fade-in">
+                    <div class="stat-icon si-orange">📋</div>
+                    <div class="stat-data">
+                        <div class="num">3</div>
+                        <div class="lbl">Formulários respondidos</div>
+                        <div class="delta">↑ 1 este mês</div>
+                    </div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-icon si-blue">🤖</div>
+                    <div class="stat-data">
+                        <div class="num">3</div>
+                        <div class="lbl">Relatórios gerados</div>
+                        <div class="delta">Último há 12 dias</div>
+                    </div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-icon si-green">📈</div>
+                    <div class="stat-data">
+                        <div class="num">2/4</div>
+                        <div class="lbl">Trilhas em progresso</div>
+                        <div class="delta">1 concluída</div>
+                    </div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-icon si-purple">⭐</div>
+                    <div class="stat-data">
+                        <div class="num">+12</div>
+                        <div class="lbl">Pontos este mês</div>
+                        <div class="delta">↑ vs. mês anterior</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 1: Formulários + IA Insights -->
+            <div class="grid-3 fade-in">
+
+                <!-- FORMULÁRIOS RECENTES -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Formulários Recentes</span>
+                        <a class="card-link" href="historico.html">Ver todos →</a>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-num">3</div>
+                        <div class="form-info">
+                            <div class="fi-title">Avaliação de Liderança Inclusiva</div>
+                            <div class="fi-date">12 abr. 2025</div>
+                        </div>
+                        <div class="form-score good">78</div>
+                        <span class="form-badge fb-done">Concluído</span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-num">2</div>
+                        <div class="form-info">
+                            <div class="fi-title">Diagnóstico de Compliance ESG</div>
+                            <div class="fi-date">18 mar. 2025</div>
+                        </div>
+                        <div class="form-score ok">64</div>
+                        <span class="form-badge fb-done">Concluído</span>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-num">1</div>
+                        <div class="form-info">
+                            <div class="fi-title">Avaliação Inicial — Capacitismo</div>
+                            <div class="fi-date">02 fev. 2025</div>
+                        </div>
+                        <div class="form-score bad">51</div>
+                        <span class="form-badge fb-done">Concluído</span>
+                    </div>
+
+                    <div class="form-row" style="opacity:.55">
+                        <div class="form-num" style="color:var(--laranja);border-color:rgba(241,124,23,.3)">4</div>
+                        <div class="form-info">
+                            <div class="fi-title">Avaliação de Liderança — Maio</div>
+                            <div class="fi-date">Disponível agora</div>
+                        </div>
+                        <div class="form-score" style="color:var(--text-muted)">—</div>
+                        <span class="form-badge fb-pending">Pendente</span>
+                    </div>
+                </div>
+
+                <!-- IA INSIGHTS -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Insights da IA</span>
+                        <a class="card-link" href="relatorios.html">Relatório completo →</a>
+                    </div>
+
+                    <div class="insight-box">
+                        <div class="insight-top">
+                            <div class="insight-icon">💡</div>
+                            <span class="insight-label">Destaque</span>
+                        </div>
+                        <p class="insight-text">Sua escuta ativa melhorou 18% em relação à avaliação anterior. Continue com práticas de reuniões 1:1.</p>
+                    </div>
+
+                    <div class="insight-box" style="background:linear-gradient(135deg,rgba(241,124,23,.08),rgba(241,124,23,.04));border-color:rgba(241,124,23,.2)">
+                        <div class="insight-top">
+                            <div class="insight-icon" style="background:rgba(241,124,23,.12);border-color:rgba(241,124,23,.2)">⚠️</div>
+                            <span class="insight-label" style="color:var(--laranja)">Atenção</span>
+                        </div>
+                        <p class="insight-text">Comunicação inclusiva ainda abaixo do ideal. Recomendamos o módulo "Linguagem Acessível" na trilha atual.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ROW 2: Trilhas + Próximas ações -->
+            <div class="grid-2 fade-in">
+
+                <!-- TRILHAS -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Trilhas de Capacitação</span>
+                        <a class="card-link" href="trilhas.html">Ver todas →</a>
+                    </div>
+
+                    <div class="trilha-item">
+                        <div class="trilha-header">
+                            <span class="trilha-title">Liderança Inclusiva — Nível 1</span>
+                            <span class="trilha-pct">100%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div>
+                        <div class="trilha-meta">
+                            <span class="trilha-chip">✓ Concluída</span>
+                            <span class="trilha-chip">8 módulos</span>
+                        </div>
+                    </div>
+
+                    <div class="trilha-item">
+                        <div class="trilha-header">
+                            <span class="trilha-title">Comunicação Acessível</span>
+                            <span class="trilha-pct">62%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:62%"></div></div>
+                        <div class="trilha-meta">
+                            <span class="trilha-chip">Em andamento</span>
+                            <span class="trilha-chip">5/8 módulos</span>
+                        </div>
+                    </div>
+
+                    <div class="trilha-item">
+                        <div class="trilha-header">
+                            <span class="trilha-title">ESG na Prática</span>
+                            <span class="trilha-pct">30%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill orange" style="width:30%"></div></div>
+                        <div class="trilha-meta">
+                            <span class="trilha-chip">Em andamento</span>
+                            <span class="trilha-chip">3/10 módulos</span>
+                        </div>
+                    </div>
+
+                    <div class="trilha-item">
+                        <div class="trilha-header">
+                            <span class="trilha-title">Anti-Capacitismo Avançado</span>
+                            <span class="trilha-pct">0%</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" style="width:0%"></div></div>
+                        <div class="trilha-meta">
+                            <span class="trilha-chip" style="color:var(--text-muted)">Não iniciada</span>
+                            <span class="trilha-chip">6 módulos</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PRÓXIMAS AÇÕES -->
+                <div class="card">
+                    <div class="card-header">
+                        <span class="card-title">Próximas Ações</span>
+                    </div>
+
+                    <div class="next-item">
+                        <div class="next-date"><span class="day">30</span><span class="mon">Abr</span></div>
+                        <div class="next-info">
+                            <div class="ni-title">Responder formulário de Maio</div>
+                            <div class="ni-sub">Avaliação mensal de liderança · Prazo recomendado</div>
+                        </div>
+                    </div>
+
+                    <div class="next-item">
+                        <div class="next-date" style="background:rgba(44,162,176,.1);border-color:rgba(44,162,176,.2)">
+                            <span class="day" style="color:var(--azure)">05</span>
+                            <span class="mon">Mai</span>
+                        </div>
+                        <div class="next-info">
+                            <div class="ni-title">Módulo: Linguagem Acessível</div>
+                            <div class="ni-sub">Trilha Comunicação Acessível · Módulo 6</div>
+                        </div>
+                    </div>
+
+                    <div class="next-item">
+                        <div class="next-date" style="background:rgba(175,82,222,.1);border-color:rgba(175,82,222,.2)">
+                            <span class="day" style="color:#c97fe8">10</span>
+                            <span class="mon">Mai</span>
+                        </div>
+                        <div class="next-info">
+                            <div class="ni-title">Revisão de relatório IA</div>
+                            <div class="ni-sub">Relatório de Abril disponível para análise</div>
+                        </div>
+                    </div>
+
+                    <div class="next-item">
+                        <div class="next-date" style="background:rgba(52,199,89,.1);border-color:rgba(52,199,89,.2)">
+                            <span class="day" style="color:#5de07a">15</span>
+                            <span class="mon">Mai</span>
+                        </div>
+                        <div class="next-info">
+                            <div class="ni-title">Iniciar trilha Anti-Capacitismo Avançado</div>
+                            <div class="ni-sub">Recomendação da IA com base no seu perfil</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div><!-- /content -->
+    </div><!-- /main -->
+
+    <script>
+        // ── USER DATA (virá da API/localStorage) ──
+        function loadUser() {
+            const name = localStorage.getItem('azuos_user') || 'Usuário';
+            const role = localStorage.getItem('azuos_role') || 'funcionario';
+            const roleLabel = { admin:'Administrador', gerente:'Gerente', funcionario:'Funcionário' };
+            const initials = name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
+
+            document.getElementById('userName').textContent   = name;
+            document.getElementById('userRole').textContent   = roleLabel[role] || 'Usuário';
+            document.getElementById('userAvatar').textContent = initials;
+
+            const hour = new Date().getHours();
+            const greet = hour < 12 ? 'Bom dia' : hour < 18 ? 'Boa tarde' : 'Boa noite';
+            document.getElementById('greetMsg').textContent = `${greet}, ${name.split(' ')[0]} 👋`;
+        }
+
+        // ── RING ANIMATION ──
+        function animateRing() {
+            const score = 75; // <- substituir pelo valor real da API
+            const circumference = 2 * Math.PI * 55; // r=55
+            const offset = circumference - (score / 100) * circumference;
+            document.getElementById('ringFill').style.strokeDasharray  = circumference;
+            document.getElementById('ringFill').style.strokeDashoffset = offset;
+            document.getElementById('scoreNum').textContent = score;
+        }
+
+        // ── SIDEBAR MOBILE ──
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('show');
+        }
+
+        // ── LOGOUT ──
+        function logout() {
+            localStorage.removeItem('azuos_token');
+            localStorage.removeItem('azuos_role');
+            localStorage.removeItem('azuos_user');
+            window.location.href = 'login.html';
+        }
+
+        // ── ACTIVE NAV ──
+        function setActiveNav() {
+            const page = window.location.pathname.split('/').pop() || 'dashboard.html';
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === page) item.classList.add('active');
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUser();
+            setTimeout(animateRing, 300);
+            setActiveNav();
+        });
+    </script>
+</body>
+</html>

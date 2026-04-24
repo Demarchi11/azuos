@@ -3,162 +3,355 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Plataforma Azuos</title>
+    <title>Plataforma Azuos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
-
+        :root {
+            --azure: #2ca2b0;
+            --laranja: #f17c17;
+            --glass: rgba(255,255,255,0.06);
+            --glass-border: rgba(255,255,255,0.11);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            margin: 0;
-            height: 100vh;
+            font-family: 'DM Sans', sans-serif;
+            min-height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(to bottom, #168199, #0e5c6d);
-            font-family: 'Open Sans', sans-serif;
-            position: relative;
-        }
-
-        .top-logo {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-        }
-
-        .top-logo img {
-            width: 150px;
-            height: auto;
-        }
-
-        .login-container {
-            width: 450px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            background: #061e2e;
+            color: white;
             overflow: hidden;
+        }
+
+        /* LEFT */
+        .left-panel {
+            width: 46%;
+            background: linear-gradient(145deg, #0a2d45 0%, #062036 55%, #071a2c 100%);
             display: flex;
             flex-direction: column;
-        }
-
-        .login-header {
-            background-color: #1a4a6e;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .login-header h1 {
-            margin: 0;
-            font-size: 1.7rem;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-
-        .login-form {
-            background-color: #d9d9d9;
-            padding: 25px;
-            display: flex;
-            flex-direction: column;
-            gap: 50px;
-            height: 300px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #333;
-            text-transform: uppercase;
-            font-size: 1.1rem;
-            font-weight: 700;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 5px;
-            border: 1px solid #999;
-            box-sizing: border-box;
-            font-size: 1rem;
-            background-color: white;
-        }
-
-        .password-wrapper {
+            justify-content: space-between;
+            padding: 52px;
             position: relative;
+            overflow: hidden;
+        }
+        .left-panel::before {
+            content:''; position:absolute; top:-100px; right:-100px;
+            width:420px; height:420px;
+            background:radial-gradient(circle,rgba(44,162,176,.16) 0%,transparent 65%);
+            border-radius:50%; pointer-events:none;
+        }
+        .left-panel::after {
+            content:''; position:absolute; bottom:-80px; left:-80px;
+            width:340px; height:340px;
+            background:radial-gradient(circle,rgba(241,124,23,.1) 0%,transparent 65%);
+            border-radius:50%; pointer-events:none;
+        }
+        .panel-logo {
+            display:flex; align-items:center; gap:13px;
+            position:relative; z-index:1; text-decoration:none;
+        }
+        .panel-logo img {
+            width:46px; height:46px; object-fit:contain;
+            filter:drop-shadow(0 0 10px rgba(241,124,23,.45));
+        }
+        .panel-logo-text {
+            font-family:'Syne',sans-serif; font-weight:800;
+            font-size:1.2rem; letter-spacing:.06em; text-transform:uppercase; color:white;
+        }
+        .panel-logo-text span { color:var(--laranja); }
+
+        .panel-content { position:relative; z-index:1; }
+        .panel-tag {
+            font-size:.7rem; font-weight:600; letter-spacing:.2em;
+            text-transform:uppercase; color:var(--azure); margin-bottom:22px;
+            display:flex; align-items:center; gap:10px;
+        }
+        .panel-tag::before { content:''; width:24px; height:1px; background:var(--azure); opacity:.7; }
+        .panel-title {
+            font-family:'Syne',sans-serif; font-size:2.7rem; font-weight:800;
+            line-height:1.08; margin-bottom:22px; letter-spacing:-.01em;
+        }
+        .panel-title span { color:var(--laranja); }
+        .panel-desc {
+            font-size:.92rem; color:rgba(255,255,255,.5);
+            line-height:1.75; max-width:340px; margin-bottom:44px;
+        }
+        .feature-list { display:flex; flex-direction:column; gap:14px; }
+        .feature-item {
+            display:flex; align-items:center; gap:14px;
+            font-size:.86rem; color:rgba(255,255,255,.65);
+        }
+        .feature-icon {
+            width:36px; height:36px; border-radius:10px;
+            background:var(--glass); border:1px solid var(--glass-border);
+            display:flex; align-items:center; justify-content:center;
+            font-size:.95rem; flex-shrink:0;
+        }
+        .panel-footer { position:relative; z-index:1; font-size:.73rem; color:rgba(255,255,255,.22); }
+
+        /* RIGHT */
+        .right-panel {
+            flex:1; display:flex; align-items:center; justify-content:center;
+            padding:48px; position:relative; background:#061e2e;
+        }
+        .right-panel::before {
+            content:''; position:absolute; top:50%; left:50%;
+            transform:translate(-50%,-50%);
+            width:520px; height:520px;
+            background:radial-gradient(circle,rgba(44,162,176,.06) 0%,transparent 70%);
+            border-radius:50%; pointer-events:none;
+        }
+        .login-box {
+            width:100%; max-width:400px;
+            position:relative; z-index:1;
+            animation:boxIn .65s cubic-bezier(.22,1,.36,1) both;
+        }
+        @keyframes boxIn {
+            from { opacity:0; transform:translateY(28px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+        .login-greeting { margin-bottom:44px; }
+        .login-greeting h2 {
+            font-family:'Syne',sans-serif; font-size:2rem; font-weight:800;
+            color:white; margin-bottom:8px; letter-spacing:-.01em;
+        }
+        .login-greeting p { font-size:.88rem; color:rgba(255,255,255,.4); }
+
+        .form-group { margin-bottom:20px; }
+        .form-group label {
+            display:block; font-size:.72rem; font-weight:600;
+            letter-spacing:.12em; text-transform:uppercase;
+            color:rgba(255,255,255,.45); margin-bottom:9px;
+        }
+        .input-wrapper { position:relative; }
+        .input-wrapper .input-icon {
+            position:absolute; left:16px; top:50%; transform:translateY(-50%);
+            color:rgba(255,255,255,.28); font-size:.85rem;
+            pointer-events:none; transition:color .3s;
+        }
+        .form-group input {
+            width:100%; background:var(--glass); border:1.5px solid var(--glass-border);
+            border-radius:10px; padding:14px 44px; color:white;
+            font-family:'DM Sans',sans-serif; font-size:.95rem;
+            outline:none; transition:border-color .3s,background .3s,box-shadow .3s;
+        }
+        .form-group input::placeholder { color:rgba(255,255,255,.22); }
+        .form-group input:focus {
+            border-color:var(--azure); background:rgba(44,162,176,.07);
+            box-shadow:0 0 0 3px rgba(44,162,176,.1);
+        }
+        .input-wrapper:focus-within .input-icon { color:var(--azure); }
+        .form-group input.error {
+            border-color:#e05252; box-shadow:0 0 0 3px rgba(224,82,82,.1);
+        }
+        .toggle-btn {
+            position:absolute; right:14px; top:50%; transform:translateY(-50%);
+            background:none; border:none; cursor:pointer;
+            color:rgba(255,255,255,.3); transition:color .3s;
+            font-size:.9rem; padding:4px;
+        }
+        .toggle-btn:hover { color:rgba(255,255,255,.65); }
+
+        .form-extras {
+            display:flex; align-items:center; justify-content:space-between;
+            margin-bottom:32px; margin-top:4px;
+        }
+        .remember-me { display:flex; align-items:center; gap:8px; cursor:pointer; }
+        .remember-me input[type="checkbox"] { width:15px; height:15px; accent-color:var(--azure); cursor:pointer; }
+        .remember-me span { font-size:.81rem; color:rgba(255,255,255,.4); }
+        .forgot-link { font-size:.81rem; color:var(--azure); text-decoration:none; transition:color .3s; }
+        .forgot-link:hover { color:#7ecfe0; }
+
+        .submit-btn {
+            width:100%; background:var(--laranja); color:white; border:none;
+            border-radius:10px; padding:16px;
+            font-family:'Syne',sans-serif; font-size:1rem; font-weight:700;
+            letter-spacing:.07em; cursor:pointer;
+            transition:background .3s,box-shadow .3s,transform .2s;
+            display:flex; align-items:center; justify-content:center; gap:10px;
+            position:relative; overflow:hidden;
+        }
+        .submit-btn::before {
+            content:''; position:absolute; top:0; left:-100%;
+            width:100%; height:100%;
+            background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+            transition:left .5s;
+        }
+        .submit-btn:hover { background:#d96a0a; box-shadow:0 10px 32px rgba(241,124,23,.42); transform:translateY(-1px); }
+        .submit-btn:hover::before { left:100%; }
+        .submit-btn:active { transform:translateY(0); }
+        .submit-btn:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+
+        .spinner {
+            width:18px; height:18px;
+            border:2px solid rgba(255,255,255,.35); border-top-color:white;
+            border-radius:50%; animation:spin .7s linear infinite;
+            display:none; flex-shrink:0;
+        }
+        @keyframes spin { to { transform:rotate(360deg); } }
+
+        .error-msg {
+            display:none;
+            background:rgba(224,82,82,.1); border:1px solid rgba(224,82,82,.28);
+            border-radius:9px; padding:12px 16px;
+            font-size:.82rem; color:#f5a0a0;
+            margin-top:16px; align-items:center; gap:9px;
         }
 
-        .password-toggle {
-            position: absolute;
-            top: 50%;
-            right: 10px;
-            transform: translateY(-50%);
-            cursor: pointer;
-            font-size: 1rem;
-            color: #666;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .login-button {
-            background-color: #1a4a6e;
-            color: white;
-            border: none;
-            margin-top: -10px;
-            padding: 12px 60px;
-            border-radius: 5px;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            align-self: center;
-        }
-
-        .login-button:hover {
-            background-color: #163f5d;
+        @media (max-width:768px) {
+            body { flex-direction:column; overflow:auto; }
+            .left-panel { width:100%; padding:32px 24px; }
+            .panel-content,.panel-footer { display:none; }
+            .right-panel { padding:32px 24px; align-items:flex-start; padding-top:48px; }
         }
     </style>
 </head>
 <body>
-    <div class="top-logo">
-        <img src="../assets/icon.png" alt="Plataforma Azuos Logo">
+
+    <div class="left-panel">
+        <a class="panel-logo" href="../index.html">
+            <img src="../assets/icon.png" alt="Azuos">
+            <span class="panel-logo-text">Plataforma <span>Azuos</span></span>
+        </a>
+        <div class="panel-content">
+            <p class="panel-tag">Bem-vindo de volta</p>
+            <h2 class="panel-title">Capacite sua<br><span>liderança</span><br>com IA.</h2>
+            <p class="panel-desc">Diagnóstico ético, trilhas de capacitação e relatórios personalizados para combater o capacitismo nas empresas.</p>
+            <div class="feature-list">
+                <div class="feature-item"><div class="feature-icon">📋</div><span>Formulário de diagnóstico com</span></div>
+                <div class="feature-item"><div class="feature-icon">🤖</div><span>Relatório gerado por inteligência artificial</span></div>
+                <div class="feature-item"><div class="feature-icon">📈</div><span>Trilha de capacitação personalizada</span></div>
+                <div class="feature-item"><div class="feature-icon">🏢</div><span>Práticas alinhadas ao ESG e Compliance</span></div>
+            </div>
+        </div>
+        <div class="panel-footer">© 2025 Plataforma Azuos · Todos os direitos reservados</div>
     </div>
 
-    <div class="login-container">
-        <div class="login-header">
-            <h1>PLATAFORMA AZUOS</h1>
-        </div>
-        <form class="login-form">
-            <div class="input-group">
-                <label for="username">USUÁRIO</label>
-                <input type="text" id="username" name="username" required>
+    <div class="right-panel">
+        <div class="login-box">
+            <div class="login-greeting">
+                <h2>Entrar na conta</h2>
+                <p>Insira suas credenciais para acessar a plataforma</p>
             </div>
-            <div class="input-group">
-                <label for="password">SENHA</label>
-                <div class="password-wrapper">
-                    <input type="password" id="password" name="password" required>
-                    <span class="password-toggle" id="togglePassword">
-                        <i class="fa-solid fa-eye" id="eyeIcon"></i>
-                    </span>
+
+            <div class="form-group">
+                <label for="username">Usuário</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-user input-icon"></i>
+                    <input type="text" id="username" name="username" placeholder="Seu nome de usuário" autocomplete="username" required>
                 </div>
             </div>
-            <button type="submit" class="login-button">ENTRAR</button>
-        </form>
+
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-lock input-icon"></i>
+                    <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required>
+                    <button type="button" class="toggle-btn" id="togglePassword" aria-label="Mostrar senha">
+                        <i class="fa-solid fa-eye" id="eyeIcon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-extras">
+                <label class="remember-me">
+                    <input type="checkbox" id="remember">
+                    <span>Lembrar de mim</span>
+                </label>
+                <a href="#" class="forgot-link">Esqueci minha senha</a>
+            </div>
+
+            <button class="submit-btn" id="loginBtn" onclick="handleLogin(event)">
+                <div class="spinner" id="spinner"></div>
+                <span id="btnText">ENTRAR</span>
+                <i class="fa-solid fa-arrow-right" id="btnArrow"></i>
+            </button>
+
+            <div class="error-msg" id="errorMsg">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <span id="errorText">Usuário ou senha incorretos. Tente novamente.</span>
+            </div>
+        </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const togglePassword = document.querySelector('#togglePassword');
-            const password = document.querySelector('#password');
-            const eyeIcon = document.querySelector('#eyeIcon');
-
-            togglePassword.addEventListener('click', function (e) {
-                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-                password.setAttribute('type', type);
-                
-                eyeIcon.classList.toggle('fa-eye');
-                eyeIcon.classList.toggle('fa-eye-slash');
-            });
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const pwd  = document.getElementById('password');
+            const icon = document.getElementById('eyeIcon');
+            if (pwd.type === 'password') {
+                pwd.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                pwd.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
         });
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+
+            document.getElementById('errorMsg').style.display = 'none';
+            document.getElementById('username').classList.remove('error');
+            document.getElementById('password').classList.remove('error');
+
+            if (!username || !password) {
+                showError('Preencha todos os campos.');
+                if (!username) document.getElementById('username').classList.add('error');
+                if (!password) document.getElementById('password').classList.add('error');
+                return;
+            }
+
+            setLoading(true);
+
+            try {
+                // ── SUBSTITUA PELA SUA API ──
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password, remember })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    localStorage.setItem('azuos_token', data.token);
+                    localStorage.setItem('azuos_role',  data.role);
+                    localStorage.setItem('azuos_user',  data.name || username);
+                    window.location.href = 'dashboard.html';
+                } else {
+                    const err = await response.json().catch(() => ({}));
+                    showError(err.message || 'Usuário ou senha incorretos.');
+                }
+            } catch (_) {
+                // Para testes sem API, descomente:
+                // window.location.href = 'dashboard.html';
+                showError('Erro de conexão. Verifique sua rede.');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        function setLoading(on) {
+            const btn    = document.getElementById('loginBtn');
+            const spinner = document.getElementById('spinner');
+            const text   = document.getElementById('btnText');
+            const arrow  = document.getElementById('btnArrow');
+            btn.disabled = on;
+            spinner.style.display  = on ? 'block' : 'none';
+            text.textContent       = on ? 'Entrando...' : 'ENTRAR';
+            arrow.style.display    = on ? 'none' : '';
+        }
+
+        function showError(msg) {
+            const el = document.getElementById('errorMsg');
+            document.getElementById('errorText').textContent = msg;
+            el.style.display = 'flex';
+        }
+
+        document.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(e); });
     </script>
 </body>
 </html>
