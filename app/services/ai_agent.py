@@ -11,61 +11,26 @@ logger = logging.getLogger(__name__)
 
 
 def _gerar_placeholder(submissao):
-    """Gera um relatório placeholder quando a IA não está disponível."""
-    respostas_resumo = []
-    for resp in submissao.respostas:
-        respostas_resumo.append(
-            f"- {resp.pergunta.pergunta}: {resp.resposta}"
-        )
-    resumo = "\n".join(respostas_resumo)
-
+    """Gera um relatório realista pré-programado ("mock") para a equipe de Front-End trabalhar."""
     return (
-        f"[PLACEHOLDER] Relatório de perfil ético\n"
-        f"Submissão #{submissao.submissao_id}\n"
-        f"Pontuação total: {submissao.pontuacao}\n\n"
-        f"Respostas:\n{resumo}\n\n"
-        f"⏳ Aguardando processamento pelo agente de IA."
+        "# Pontos Fortes:\n"
+        "- **Reação sob pressão:** O candidato demonstra uma abordagem equilibrada ao tentar manter a calma e, crucialmente, valorizar a colaboração com a equipe. Isso indica autoconsciência e reconhecimento da força coletiva, características essenciais para uma liderança eficaz e ética.\n"
+        "- **Lidar com atrasos:** A postura de informar a gerência imediatamente reflete um alto nível de transparência, honestidade e responsabilidade. Essas qualidades são fundamentais para construir confiança.\n\n"
+        "# Pontos Fracos:\n"
+        "- Nenhum ponto fraco significativo ou área de risco foi identificada com base nas respostas fornecidas.\n\n"
+        "# Conclusão:\n"
+        f"O candidato demonstrou um perfil ético robusto e promissor. A pontuação total de {submissao.pontuacao}, aliada à qualidade das respostas, sugere que o candidato está bem alinhado com os princípios éticos esperados e apto para assumir responsabilidades que demandem integridade e liderança colaborativa.\n\n"
+        "*⚠️ NOTA: Este é um relatório simulado fixo, pois a API da verdadeira Inteligência Artificial está sob desenvolvimento e temporariamente desativada.*"
     )
 
 
 def gerar_relatorio_ia(submissao):
     """
-    Envia dados da submissão para o agente ADK e salva o relatório gerado.
-    Se AI_AGENT_URL não estiver configurada, gera um placeholder imediatamente.
+    Simula a geração de relatório para o front-end poder trabalhar.
+    As chamadas HTTP para o agente estão 100% desativadas para evitar timeouts até que o desenvolvimento no ADK seja concluído.
     """
-    ai_url = current_app.config.get("AI_AGENT_URL", "")
-
-    # Se a IA não está configurada, gera placeholder sem tentar conexão
-    if not ai_url or "localhost:8080" in ai_url:
-        logger.info("Agente de IA não configurado. Gerando placeholder.")
-        conteudo = _gerar_placeholder(submissao)
-    else:
-        # Montar payload para o agente
-        respostas_payload = []
-        for resp in submissao.respostas:
-            pergunta_obj = resp.pergunta
-            respostas_payload.append({
-                "pergunta": pergunta_obj.pergunta,
-                "resposta": resp.resposta,
-                "pontuacao": pergunta_obj.pontuacao,
-            })
-
-        payload = {
-            "submissao_id": submissao.submissao_id,
-            "usuario": submissao.usuario.to_dict(),
-            "formulario": submissao.formulario.to_dict(),
-            "respostas": respostas_payload,
-            "pontuacao_total": submissao.pontuacao,
-        }
-
-        try:
-            response = requests.post(ai_url, json=payload, timeout=60)
-            response.raise_for_status()
-            resultado = response.json()
-            conteudo = resultado.get("relatorio", resultado.get("conteudo", ""))
-        except requests.exceptions.RequestException as e:
-            logger.warning(f"Agente de IA indisponível ({e}). Usando placeholder.")
-            conteudo = _gerar_placeholder(submissao)
+    logger.info("Modo de Teste: Agente de IA desativado via código. Gerando placeholder realista.")
+    conteudo = _gerar_placeholder(submissao)
 
     relatorio = Relatorio(
         conteudo=conteudo, data_criacao=date.today(),
