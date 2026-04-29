@@ -52,12 +52,13 @@
 ### Banco de Dados
    - ![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white) ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
 
-<!---
+
 ## Modelagem de Sistemas em Desenvolvimento
-Draw.io com Modelo Conceitual e Lógico
-Banco de Dados com Dbeaver com Modelo Físico
-Consultas feitas e pensadas para o consumo futuro da API
---->
+- Modelagem Conceitual (drawio)
+![Modelagm Conceitual](modelagem-conceitual.png)
+- Modelagem Lógica (pupabase)
+![Modelagm Lógica](modelagem-logica.jpeg)
+
 
 
 ---
