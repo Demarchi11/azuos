@@ -15,8 +15,9 @@
 
 ### Pesquisar esses assuntos
 
- - IA e o futuro do trabalho; nossa plataforma pode ensinar e aperfeiçõar a relação entre funcionários e essa tecnologia 
+- IA e o futuro do trabalho; nossa plataforma pode ensinar e aperfeiçõar a relação entre funcionários e essa tecnologia 
 - Redes Neurais, Engenharia de Prompt, Letramento em IA, Ética Aplicada, Inteligência emocianal e Comunicação
+- Gestão de Risco, Governaça e Trabalho em Equipe
 
 
 # Baby Canva
