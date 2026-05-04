@@ -17,3 +17,9 @@
 
  - IA e o futuro do trabalho; nossa plataforma pode ensinar e aperfeiçõar a relação entre funcionários e essa tecnologia 
 - Redes Neurais, Engenharia de Prompt, Letramento em IA, Ética Aplicada, Inteligência emocianal e Comunicação
+
+
+# Baby Canva
+
+- Baby Canva Inicial
+![Baby Canva](BabyCanvaInicial.png)
