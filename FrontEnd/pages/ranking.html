@@ -137,31 +137,40 @@
 </head>
 <body>
 
-    <aside class="sidebar">
-        <a class="sidebar-logo" href="#">
-            <img src="../assets/icon.png" alt="Azuos">
-            <span class="sidebar-logo-text">Plataforma <span>Azuos</span></span>
-        </a>
-        <nav class="sidebar-nav">
-            <div class="nav-section-label">Principal</div>
-            <a class="nav-item" href="dashboard.html"><i class="fa-solid fa-gauge-high"></i> Visão Geral</a>
-            <a class="nav-item" href="formulario.html"><i class="fa-solid fa-clipboard-list"></i> Formulário</a>
-            <a class="nav-item" href="historico.html"><i class="fa-solid fa-clock-rotate-left"></i> Histórico</a>
-            
-            <div class="nav-section-label">Gestão</div>
-            <a class="nav-item active" href="#"><i class="fa-solid fa-trophy"></i> Ranking</a>
-            <a class="nav-item" href="equipe.html"><i class="fa-solid fa-users"></i> Equipe</a>
-        </nav>
-        <div class="sidebar-footer">
-            <div class="user-card">
-                <div class="user-avatar">JD</div>
-                <div class="user-info">
-                    <div class="user-name">João Demarchi</div>
-                    <div class="user-role">Gerente</div>
-                </div>
+    <aside class="sidebar" id="sidebar">
+    <a class="sidebar-logo" href="../index.html">
+        <img src="../assets/icon.png" alt="Azuos">
+        <span class="sidebar-logo-text">Plataforma <span>Azuos</span></span>
+    </a>
+    
+    <nav class="sidebar-nav">
+        <div class="nav-section-label">Principal</div>
+        <a class="nav-item" href="dashboard.html"><i class="fa-solid fa-gauge-high"></i> Visão Geral</a>
+        <a class="nav-item" href="formulario.html"><i class="fa-solid fa-clipboard-list"></i> Formulário</a>
+        <a class="nav-item" href="historico.html"><i class="fa-solid fa-clock-rotate-left"></i> Histórico</a>
+        
+        <div class="nav-section-label">Gestão</div>
+        <a class="nav-item" href="ranking.html"><i class="fa-solid fa-trophy"></i> Ranking</a>
+        <a class="nav-item" href="equipe.html"><i class="fa-solid fa-users"></i> Equipe</a>
+        
+        <div class="nav-section-label">Sistema</div>
+        <a class="nav-item" href="notificacoes.html"><i class="fa-solid fa-bell"></i> Notificações</a>
+        <a class="nav-item" href="configuracoes.html"><i class="fa-solid fa-gear"></i> Configurações</a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="user-card">
+            <div class="user-avatar" id="userInitial">--</div>
+            <div class="user-info">
+                <div class="user-name" id="userName">Carregando...</div>
+                <div class="user-role" id="userRole">...</div>
             </div>
         </div>
-    </aside>
+        <a class="nav-item" onclick="logout()" style="color: #ff5252; cursor: pointer;">
+            <i class="fa-solid fa-right-from-bracket"></i> Sair
+        </a>
+    </div>
+</aside>
 
     <div class="main">
         <header class="topbar">

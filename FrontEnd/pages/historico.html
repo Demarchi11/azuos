@@ -439,40 +439,40 @@
         <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
         <!-- ─── SIDEBAR ─── -->
-        <aside class="sidebar" id="sidebar">
-            <a class="sidebar-logo" href="../index.html">
-                <img src="../assets/icon.png" alt="Azuos">
-                <span class="sidebar-logo-text">Plataforma <span>Azuos</span></span>
-            </a>
-            <nav class="sidebar-nav">
-                <div class="nav-section-label">Principal</div>
-                <a class="nav-item" href="dashboard.html"><i class="fa-solid fa-gauge-high"></i> Visão Geral</a>
-                <a class="nav-item" href="formulario.html"><i class="fa-solid fa-clipboard-list"></i> Formulário<span class="nav-badge">Novo</span></a>
-                <a class="nav-item active" href="historico.html"><i class="fa-solid fa-clock-rotate-left"></i> Histórico</a>
-                <a class="nav-item" href="trilhas.html"><i class="fa-solid fa-road"></i> Trilhas</a>
-                <a class="nav-item" href="relatorios.html"><i class="fa-solid fa-chart-bar"></i> Relatórios IA</a>
+       <aside class="sidebar" id="sidebar">
+    <a class="sidebar-logo" href="../index.html">
+        <img src="../assets/icon.png" alt="Azuos">
+        <span class="sidebar-logo-text">Plataforma <span>Azuos</span></span>
+    </a>
+    
+    <nav class="sidebar-nav">
+        <div class="nav-section-label">Principal</div>
+        <a class="nav-item" href="dashboard.html"><i class="fa-solid fa-gauge-high"></i> Visão Geral</a>
+        <a class="nav-item" href="formulario.html"><i class="fa-solid fa-clipboard-list"></i> Formulário</a>
+        <a class="nav-item" href="historico.html"><i class="fa-solid fa-clock-rotate-left"></i> Histórico</a>
+        
+        <div class="nav-section-label">Gestão</div>
+        <a class="nav-item" href="ranking.html"><i class="fa-solid fa-trophy"></i> Ranking</a>
+        <a class="nav-item" href="equipe.html"><i class="fa-solid fa-users"></i> Equipe</a>
+        
+        <div class="nav-section-label">Sistema</div>
+        <a class="nav-item" href="notificacoes.html"><i class="fa-solid fa-bell"></i> Notificações</a>
+        <a class="nav-item" href="configuracoes.html"><i class="fa-solid fa-gear"></i> Configurações</a>
+    </nav>
 
-                <div class="nav-section-label">Gestão</div>
-                <a class="nav-item" href="equipe.html"><i class="fa-solid fa-users"></i> Equipe</a>
-                <a class="nav-item" href="ranking.html"><i class="fa-solid fa-trophy"></i> Ranking</a>
-                <a class="nav-item" href="empresa.html"><i class="fa-solid fa-building"></i> Empresa</a>
-
-                <div class="nav-section-label">Conta</div>
-                <a class="nav-item" href="configuracoes.html"><i class="fa-solid fa-gear"></i> Configurações</a>
-            </nav>
-            <div class="sidebar-footer">
-                <div class="user-card">
-                    <div class="user-avatar" id="userAvatar">JD</div>
-                    <div class="user-info">
-                        <div class="user-name" id="userName">João Demarchi</div>
-                        <div class="user-role" id="userRole">Gerente</div>
-                    </div>
-                    <button class="logout-btn" onclick="logout()" title="Sair">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                    </button>
-                </div>
+    <div class="sidebar-footer">
+        <div class="user-card">
+            <div class="user-avatar" id="userInitial">--</div>
+            <div class="user-info">
+                <div class="user-name" id="userName">Carregando...</div>
+                <div class="user-role" id="userRole">...</div>
             </div>
-        </aside>
+        </div>
+        <a class="nav-item" onclick="logout()" style="color: #ff5252; cursor: pointer;">
+            <i class="fa-solid fa-right-from-bracket"></i> Sair
+        </a>
+    </div>
+</aside>
 
         <!-- ─── MAIN ─── -->
         <div class="main">
@@ -747,85 +747,80 @@
         </div><!-- /main -->
 
         <script>
-            // ── USER DATA ──
-            function loadUser() {
-                const name = localStorage.getItem('azuos_user') || 'Usuário';
-                const role = localStorage.getItem('azuos_role') || 'funcionario';
-                const roleLabel = { admin:'Administrador', gerente:'Gerente', funcionario:'Funcionário' };
-                const initials = name.split(' ').slice(0,2).map(n => n[0]).join('').toUpperCase();
-                document.getElementById('userName').textContent   = name;
-                document.getElementById('userRole').textContent   = roleLabel[role] || 'Usuário';
-                document.getElementById('userAvatar').textContent = initials;
-            }
+           // ── CONFIGURAÇÃO GLOBAL DA SIDEBAR ──
 
-            // ── FILTER ──
-            let activeFilter = 'todos';
+function loadUser() {
+    // Busca dados salvos no login
+    const name = localStorage.getItem('azuos_user') || 'Usuário';
+    const role = localStorage.getItem('azuos_role') || 'funcionario';
+    
+    // Rótulos de cargo (padronizados para todas as páginas)
+    const roleLabels = { 
+        admin: 'Administrador', 
+        gerente: 'Gerente', 
+        funcionario: 'Funcionário' 
+    };
 
-            function filterBy(nivel, btn) {
-                activeFilter = nivel;
-                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                applyFilters();
-            }
+    // Gera iniciais (Ex: "João Silva" -> "JS")
+    const initials = name.split(' ')
+                         .filter(n => n.length > 0)
+                         .slice(0, 2)
+                         .map(n => n[0])
+                         .join('')
+                         .toUpperCase();
 
-            function filterSearch(val) { applyFilters(val); }
+    // Atualiza os elementos na tela (com IDs que existem na sua sidebar)
+    const nameEl = document.getElementById('userName');
+    const roleEl = document.getElementById('userRole');
+    const avatarEl = document.getElementById('userAvatar') || document.getElementById('userInitial');
 
-            function applyFilters(searchVal) {
-                const search = (searchVal !== undefined ? searchVal : document.getElementById('searchInput').value).toLowerCase();
-                const cards  = document.querySelectorAll('.hist-card');
-                let visible  = 0;
+    if (nameEl) nameEl.textContent = name;
+    if (roleEl) roleEl.textContent = roleLabels[role] || 'Usuário';
+    if (avatarEl) avatarEl.textContent = initials;
 
-                cards.forEach(card => {
-                    const matchNivel  = activeFilter === 'todos' || card.dataset.nivel === activeFilter;
-                    const matchSearch = !search || card.dataset.titulo.toLowerCase().includes(search);
-                    const show = matchNivel && matchSearch;
-                    card.style.display = show ? '' : 'none';
-                    if (show) visible++;
-                });
+    // Mensagem de saudação (específico para o Dashboard, mas não quebra outras páginas)
+    const greetEl = document.getElementById('greetMsg');
+    if (greetEl) {
+        const hour = new Date().getHours();
+        const greet = hour < 12 ? 'Bom dia' : hour < 18 ? 'Boa tarde' : 'Boa noite';
+        greetEl.textContent = `${greet}, ${name.split(' ')[0]} 👋`;
+    }
+}
 
-                document.getElementById('emptyState').style.display = visible === 0 ? 'block' : 'none';
-            }
+function setActiveNav() {
+    // Detecta qual arquivo .html está aberto no momento
+    const path = window.location.pathname;
+    const page = path.split('/').pop() || 'dashboard.html';
+    
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+        // Se o link do menu for igual à página atual, marca como azul
+        if (item.getAttribute('href') === page) {
+            item.classList.add('active');
+        }
+    });
+}
 
-            // ── ACTIONS (stubs — conectar à API) ──
-            function downloadPDF(btn, id) {
-                const orig = btn.innerHTML;
-                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Gerando...';
-                btn.disabled = true;
-                setTimeout(() => {
-                    btn.innerHTML = '<i class="fa-solid fa-check"></i> Baixado!';
-                    setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; }, 1800);
-                }, 1400);
-                // TODO: window.open(`/api/relatorios/${id}/pdf`, '_blank');
-            }
+function logout() {
+    // Limpa TUDO para não sobrar rastro de usuário anterior
+    localStorage.removeItem('azuos_token');
+    localStorage.removeItem('azuos_role');
+    localStorage.removeItem('azuos_user');
+    window.location.href = 'login.html';
+}
 
-            function viewRelatorio(id) {
-                window.location.href = `relatorios.html?id=${id}`;
-            }
+function toggleSidebar() {
+    const sb = document.getElementById('sidebar');
+    const ov = document.getElementById('overlay');
+    if(sb) sb.classList.toggle('open');
+    if(ov) ov.classList.toggle('show');
+}
 
-            function compartilhar(id) {
-                const url = `${location.origin}/pages/relatorios.html?id=${id}`;
-                if (navigator.share) {
-                    navigator.share({ title: 'Relatório Azuos', url });
-                } else {
-                    navigator.clipboard.writeText(url).then(() => alert('Link copiado!'));
-                }
-            }
-
-            // ── SIDEBAR ──
-            function toggleSidebar() {
-                document.getElementById('sidebar').classList.toggle('open');
-                document.getElementById('overlay').classList.toggle('show');
-            }
-
-            // ── LOGOUT ──
-            function logout() {
-                localStorage.removeItem('azuos_token');
-                localStorage.removeItem('azuos_role');
-                localStorage.removeItem('azuos_user');
-                window.location.href = 'login.html';
-            }
-
-            document.addEventListener('DOMContentLoaded', loadUser);
+// ── INICIALIZAÇÃO ──
+document.addEventListener('DOMContentLoaded', () => {
+    loadUser();
+    setActiveNav();
+});
         </script>
     </body>
     </html>
