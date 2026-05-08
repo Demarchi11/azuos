@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Plataforma Azuos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, #168199, #0e5c6d);
+            font-family: 'Open Sans', sans-serif;
+            position: relative;
+        }
+
+        .top-logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .top-logo img {
+            width: 150px;
+            height: auto;
+        }
+
+        .login-container {
+            width: 450px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login-header {
+            background-color: #1a4a6e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .login-header h1 {
+            margin: 0;
+            font-size: 1.7rem;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .login-form {
+            background-color: #d9d9d9;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 50px;
+            height: 300px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #999;
+            box-sizing: border-box;
+            font-size: 1rem;
+            background-color: white;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 1rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-button {
+            background-color: #1a4a6e;
+            color: white;
+            border: none;
+            margin-top: -10px;
+            padding: 12px 60px;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            align-self: center;
+        }
+
+        .login-button:hover {
+            background-color: #163f5d;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-logo">
+        <img src="../assets/icon.png" alt="Plataforma Azuos Logo">
+    </div>
+
+    <div class="login-container">
+        <div class="login-header">
+            <h1>PLATAFORMA AZUOS</h1>
+        </div>
+        <form class="login-form">
+            <div class="input-group">
+                <label for="username">USUÁRIO</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">SENHA</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password" required>
+                    <span class="password-toggle" id="togglePassword">
+                        <i class="fa-solid fa-eye" id="eyeIcon"></i>
+                    </span>
+                </div>
+            </div>
+            <button type="submit" class="login-button">ENTRAR</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const togglePassword = document.querySelector('#togglePassword');
+            const password = document.querySelector('#password');
+            const eyeIcon = document.querySelector('#eyeIcon');
+
+            togglePassword.addEventListener('click', function (e) {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                
+                eyeIcon.classList.toggle('fa-eye');
+                eyeIcon.classList.toggle('fa-eye-slash');
+            });
+        });
+    </script>
+</body>
+</html>
