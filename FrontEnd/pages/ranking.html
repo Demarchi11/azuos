@@ -43,10 +43,43 @@
             width: var(--sidebar-w); background: var(--surface); border-right: 1px solid var(--border);
             display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 50; transition: transform .3s;
         }
-        .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 24px 20px; border-bottom: 1px solid var(--border); text-decoration: none; }
-        .sidebar-logo img { width: 36px; height: 36px; filter: drop-shadow(0 0 8px rgba(241,124,23,.4)); }
-        .sidebar-logo-text { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; color: white; text-transform: uppercase; }
-        .sidebar-logo-text span { color: var(--laranja); }
+ /* Container da Logo */
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 20px;
+    
+    /* O SEGREDO: Essa altura deve ser igual à da sua .topbar (geralmente 64px ou 70px) */
+    height: 64px; 
+    
+    /* Se ainda estiver alto, aumente este padding-top para "empurrar" para baixo */
+    padding-top: 10px; 
+    
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    background: transparent; /* Mantém a cor da sidebar */
+}
+
+.sidebar-logo img {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+    object-fit: contain;
+}
+
+.sidebar-logo-text {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+}
+
+.sidebar-logo-text span {
+    color: var(--laranja); /* A cor laranja que você já usa */
+}
         .sidebar-nav { flex: 1; padding: 16px 12px; overflow-y: auto; }
         .nav-section-label { font-size: .62rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; padding: 0 10px; margin: 20px 0 8px; }
         .nav-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 9px; text-decoration: none; color: var(--text-muted); font-size: .875rem; transition: .2s; margin-bottom: 2px; }
@@ -139,9 +172,9 @@
 
     <aside class="sidebar" id="sidebar">
     <a class="sidebar-logo" href="../index.html">
-        <img src="../assets/icon.png" alt="Azuos">
-        <span class="sidebar-logo-text">Plataforma <span>Azuos</span></span>
-    </a>
+    <img src="../assets/icon.png" alt="Azuos">
+    <span class="sidebar-logo-text">Plataforma <span>Azuos</span></span>
+</a>
     
     <nav class="sidebar-nav">
         <div class="nav-section-label">Principal</div>
