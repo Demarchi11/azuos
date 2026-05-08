@@ -1,3 +1,17 @@
+# Paleta de cores: 
+ 
+### Fundos e elementos 
+- azul escuro #073f62
+- azure #2ca2b0
+- laranja #f17c17
+- azure vivido 0e708e
+- azure #1e84a6
+
+### Textos
+- preto #00000
+- laranja #f17c17 (título)
+
+
 # Sites de Pesquisa
 ---
 
