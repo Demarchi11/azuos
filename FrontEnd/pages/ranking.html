@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking de Funcionários — Plataforma Azuos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --azure: #2ca2b0;
+            --azure-dark: #0e708e;
+            --laranja: #f17c17;
+            --azul-escuro: #073f62;
+            --bg: #07192a;
+            --surface: #0d2337;
+            --surface2: #112b40;
+            --border: rgba(255,255,255,0.08);
+            --text: #ffffff;
+            --text-muted: rgba(255,255,255,0.45);
+            --sidebar-w: 240px;
+            
+            /* Cores do Ranking */
+            --status-acima: #1565c0;
+            --status-dentro: #2e7d32;
+            --status-abaixo: #f9a825;
+            --status-critico: #c62828;
+        }
+
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ─── SIDEBAR (Mantida Original) ─── */
+        .sidebar {
+            width: var(--sidebar-w); background: var(--surface); border-right: 1px solid var(--border);
+            display: flex; flex-direction: column; position: fixed; top: 0; left: 0; bottom: 0; z-index: 50; transition: transform .3s;
+        }
+        .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 24px 20px; border-bottom: 1px solid var(--border); text-decoration: none; }
+        .sidebar-logo img { width: 36px; height: 36px; filter: drop-shadow(0 0 8px rgba(241,124,23,.4)); }
+        .sidebar-logo-text { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1rem; color: white; text-transform: uppercase; }
+        .sidebar-logo-text span { color: var(--laranja); }
+        .sidebar-nav { flex: 1; padding: 16px 12px; overflow-y: auto; }
+        .nav-section-label { font-size: .62rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; padding: 0 10px; margin: 20px 0 8px; }
+        .nav-item { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 9px; text-decoration: none; color: var(--text-muted); font-size: .875rem; transition: .2s; margin-bottom: 2px; }
+        .nav-item:hover { background: rgba(255,255,255,.06); color: white; }
+        .nav-item.active { background: rgba(44,162,176,.13); color: var(--azure); font-weight: 600; }
+        .sidebar-footer { padding: 16px 12px; border-top: 1px solid var(--border); }
+        .user-card { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; background: rgba(255,255,255,.04); border: 1px solid var(--border); }
+        .user-avatar { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--azure-dark), var(--azure)); display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-weight: 700; font-size: .85rem; }
+
+        /* ─── MAIN ─── */
+        .main { margin-left: var(--sidebar-w); flex: 1; display: flex; flex-direction: column; min-height: 100vh; }
+        .topbar { height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 32px; border-bottom: 1px solid var(--border); background: rgba(7,25,42,.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 40; }
+        .topbar-left h1 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; color: white; }
+        .content { padding: 32px; flex: 1; }
+
+        /* ─── RANKING COMPONENTS ─── */
+        .filters { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+        .filters select {
+            background: var(--surface2); border: 1px solid var(--border); color: white;
+            padding: 10px 16px; border-radius: 8px; outline: none; font-family: 'DM Sans', sans-serif; cursor: pointer;
+        }
+
+        /* PODIUM */
+        .podium-section { 
+            background: linear-gradient(135deg, var(--surface2) 0%, rgba(14,112,142,.2) 100%);
+            border: 1px solid var(--border); border-radius: 20px; padding: 40px 20px 0; margin-bottom: 32px;
+        }
+        .podium-title { text-align: center; font-family: 'Syne', sans-serif; color: var(--laranja); font-weight: 800; margin-bottom: 24px; text-transform: uppercase; letter-spacing: 1px; }
+        .podium-wrap { display: flex; align-items: flex-end; justify-content: center; gap: 16px; max-width: 800px; margin: 0 auto; }
+        .podium-item { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; }
+
+        .avatar-podium {
+            width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.5rem; position: relative; margin-bottom: 12px;
+            border: 3px solid rgba(255,255,255,0.1);
+        }
+        .pos-1 .avatar-podium { width: 90px; height: 90px; font-size: 2rem; border-color: var(--laranja); }
+        .medal { position: absolute; bottom: -2px; right: -2px; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 12px; border: 2px solid var(--surface2); }
+        .medal-1 { background: #fdd835; color: #5a3d00; }
+        .medal-2 { background: #b0bec5; color: #263238; }
+        .medal-3 { background: #cd7f32; color: #fff; }
+
+        .podium-name { font-weight: 700; font-size: 0.95rem; margin-bottom: 4px; }
+        .podium-score { color: var(--laranja); font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; margin-bottom: 8px; }
+        .podium-base { width: 100%; border-radius: 12px 12px 0 0; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-weight: 800; color: rgba(255,255,255,0.1); font-family: 'Syne'; }
+        .pos-1 .podium-base { height: 100px; background: rgba(255,255,255,0.1); }
+        .pos-2 .podium-base { height: 75px; }
+        .pos-3 .podium-base { height: 55px; }
+
+        /* TABLE */
+        .table-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+        .table-header { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .table-header h3 { font-family: 'Syne', sans-serif; font-size: 1rem; }
+
+        table { width: 100%; border-collapse: collapse; }
+        th { padding: 14px 24px; text-align: left; font-size: 0.75rem; text-transform: uppercase; color: var(--azure); letter-spacing: 1px; background: rgba(255,255,255,0.02); }
+        td { padding: 16px 24px; font-size: 0.88rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+        tr:last-child td { border-bottom: none; }
+        
+        .rank-num { font-family: 'Syne', sans-serif; font-weight: 800; color: var(--text-muted); width: 50px; }
+        .rank-num.top { color: var(--laranja); }
+        
+        .emp-info { display: flex; align-items: center; gap: 12px; }
+        .avatar-sm { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem; }
+        
+        .badge { font-size: 0.7rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; }
+        .badge-acima { background: rgba(21, 101, 192, 0.15); color: #64b5f6; }
+        .badge-dentro { background: rgba(46, 125, 50, 0.15); color: #81c784; }
+        .badge-abaixo { background: rgba(249, 168, 37, 0.15); color: #ffd54f; }
+        .badge-critico { background: rgba(198, 40, 40, 0.15); color: #e57373; }
+
+        .progress-mini { width: 100px; height: 6px; background: rgba(255,255,255,0.05); border-radius: 10px; overflow: hidden; }
+        .progress-bar { height: 100%; transition: width 1s ease; }
+
+        .score-val { font-family: 'Syne', sans-serif; font-weight: 700; color: var(--laranja); font-size: 1rem; }
+
+        /* MOBILE FIX */
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            .main { margin-left: 0; }
+            .podium-wrap { gap: 8px; }
+            .hide-mobile { display: none; }
+        }
+
+        .fade-in { animation: fadeUp .6s ease forwards; }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <a class="sidebar-logo" href="#">
+            <img src="../assets/icon.png" alt="Azuos">
+            <span class="sidebar-logo-text">Plataforma <span>Azuos</span></span>
+        </a>
+        <nav class="sidebar-nav">
+            <div class="nav-section-label">Principal</div>
+            <a class="nav-item" href="dashboard.html"><i class="fa-solid fa-gauge-high"></i> Visão Geral</a>
+            <a class="nav-item" href="formulario.html"><i class="fa-solid fa-clipboard-list"></i> Formulário</a>
+            <a class="nav-item" href="historico.html"><i class="fa-solid fa-clock-rotate-left"></i> Histórico</a>
+            
+            <div class="nav-section-label">Gestão</div>
+            <a class="nav-item active" href="#"><i class="fa-solid fa-trophy"></i> Ranking</a>
+            <a class="nav-item" href="equipe.html"><i class="fa-solid fa-users"></i> Equipe</a>
+        </nav>
+        <div class="sidebar-footer">
+            <div class="user-card">
+                <div class="user-avatar">JD</div>
+                <div class="user-info">
+                    <div class="user-name">João Demarchi</div>
+                    <div class="user-role">Gerente</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <div class="main">
+        <header class="topbar">
+            <div class="topbar-left">
+                <h1>Ranking de Performance</h1>
+            </div>
+        </header>
+
+        <div class="content">
+            
+            <div class="filters fade-in">
+                <select id="filterDept" onchange="render()">
+                    <option value="">Todos os Departamentos</option>
+                </select>
+                <select id="filterStatus" onchange="render()">
+                    <option value="">Todos os Status</option>
+                    <option value="acima">Acima da Expectativa</option>
+                    <option value="dentro">Dentro da Expectativa</option>
+                    <option value="abaixo">Abaixo da Expectativa</option>
+                    <option value="critico">Crítico</option>
+                </select>
+                <select id="filterOrder" onchange="render()">
+                    <option value="desc">Maior Pontuação</option>
+                    <option value="asc">Menor Pontuação</option>
+                </select>
+            </div>
+
+            <div class="podium-section fade-in">
+                <p class="podium-title">Top 3 Colaboradores</p>
+                <div class="podium-wrap" id="podium">
+                    </div>
+            </div>
+
+            <div class="table-card fade-in">
+                <div class="table-header">
+                    <h3>Classificação Geral</h3>
+                    <span id="table-count" style="font-size: 0.8rem; color: var(--text-muted)"></span>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 70px;">Pos</th>
+                                <th>Funcionário</th>
+                                <th class="hide-mobile">Departamento</th>
+                                <th>Status</th>
+                                <th style="text-align: right;">Score</th>
+                                <th class="hide-mobile">Progresso</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const employees = [
+            { name: 'Ana Costa', initials: 'AC', dept: 'Vendas', score: 94 },
+            { name: 'Bruno Martins', initials: 'BM', dept: 'TI', score: 87 },
+            { name: 'Carla Souza', initials: 'CS', dept: 'RH', score: 82 },
+            { name: 'Diego Lima', initials: 'DL', dept: 'Vendas', score: 76 },
+            { name: 'Eduarda Pereira', initials: 'EP', dept: 'Marketing', score: 71 },
+            { name: 'Felipe Rocha', initials: 'FR', dept: 'TI', score: 65 },
+            { name: 'Gabriela Nunes', initials: 'GN', dept: 'RH', score: 60 },
+            { name: 'Henrique Dias', initials: 'HD', dept: 'Marketing', score: 54 },
+            { name: 'Isabela Ferreira', initials: 'IF', dept: 'Financeiro', score: 49 },
+            { name: 'João Almeida', initials: 'JA', dept: 'Financeiro', score: 42 },
+        ];
+
+        const statusData = {
+            acima: { label: 'Acima da expectativa', color: '#1565c0' },
+            dentro: { label: 'Dentro da expectativa', color: '#2e7d32' },
+            abaixo: { label: 'Abaixo da expectativa', color: '#f9a825' },
+            critico: { label: 'Crítico', color: '#c62828' }
+        };
+
+        const avatarColors = ['#2ca2b0', '#f17c17', '#0e708e', '#073f62', '#1e84a6'];
+
+        function getStatus(score) {
+            if (score >= 85) return 'acima';
+            if (score >= 65) return 'dentro';
+            if (score >= 50) return 'abaixo';
+            return 'critico';
+        }
+
+        function initFilters() {
+            const depts = [...new Set(employees.map(e => e.dept))].sort();
+            const sel = document.getElementById('filterDept');
+            depts.forEach(d => {
+                const o = document.createElement('option');
+                o.value = d; o.textContent = d;
+                sel.appendChild(o);
+            });
+        }
+
+        function render() {
+            const dept = document.getElementById('filterDept').value;
+            const status = document.getElementById('filterStatus').value;
+            const orderDir = document.getElementById('filterOrder').value;
+
+            let list = employees
+                .map(e => ({ ...e, statusKey: getStatus(e.score) }))
+                .filter(e => !dept || e.dept === dept)
+                .filter(e => !status || e.statusKey === status)
+                .sort((a, b) => orderDir === 'asc' ? a.score - b.score : b.score - a.score);
+
+            document.getElementById('table-count').textContent = `${list.length} funcionários encontrados`;
+
+            renderPodium(list);
+            renderTable(list);
+        }
+
+        function renderPodium(list) {
+            const el = document.getElementById('podium');
+            const top3 = list.slice(0, 3);
+            
+            // Reordenar para o 1º ficar no meio visualmente [2, 1, 3]
+            const visual = [];
+            if (top3[1]) visual.push(top3[1]);
+            if (top3[0]) visual.push(top3[0]);
+            if (top3[2]) visual.push(top3[2]);
+
+            el.innerHTML = visual.map(emp => {
+                const originalIndex = list.indexOf(emp) + 1;
+                const posClass = originalIndex === 1 ? 'pos-1' : (originalIndex === 2 ? 'pos-2' : 'pos-3');
+                return `
+                    <div class="podium-item ${posClass}">
+                        <div class="avatar-podium" style="background: ${avatarColors[originalIndex % 5]}">
+                            ${emp.initials}
+                            <div class="medal medal-${originalIndex}">${originalIndex}</div>
+                        </div>
+                        <div class="podium-name">${emp.name.split(' ')[0]}</div>
+                        <div class="podium-score">${emp.score}</div>
+                        <div class="podium-base">${originalIndex}º</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderTable(list) {
+            const tbody = document.getElementById('tbody');
+            tbody.innerHTML = list.map((emp, i) => `
+                <tr>
+                    <td class="rank-num ${i < 3 ? 'top' : ''}">${i + 1}º</td>
+                    <td>
+                        <div class="emp-info">
+                            <div class="avatar-sm" style="background:${avatarColors[i % 5]}">${emp.initials}</div>
+                            <div>
+                                <div style="font-weight:600">${emp.name}</div>
+                                <div style="font-size:0.7rem; color:var(--text-muted)" class="show-mobile">${emp.dept}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="hide-mobile"><span style="color:var(--azure)">${emp.dept}</span></td>
+                    <td><span class="badge badge-${emp.statusKey}">${statusData[emp.statusKey].label}</span></td>
+                    <td style="text-align:right" class="score-val">${emp.score} pts</td>
+                    <td class="hide-mobile">
+                        <div class="progress-mini">
+                            <div class="progress-bar" style="width:${emp.score}%; background:${statusData[emp.statusKey].color}"></div>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initFilters();
+            render();
+        });
+    </script>
+</body>
+</html>
