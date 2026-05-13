@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Plataforma Azuos</title>
+    <link rel="stylesheet" href="../styles/login.css">
+
+</head>
+<body>
+    <div class="top-logo">
+        <img src="../assets/icon.png" alt="Plataforma Azuos Logo">
+    </div>
+
+    <div class="login-container">
+        <div class="login-header">
+            <h1>PLATAFORMA AZUOS</h1>
+        </div>
+        <form class="login-form">
+            <div class="input-group">
+                <label for="username">USUÁRIO</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="password">SENHA</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" name="password" required>
+                    <span class="password-toggle" id="togglePassword">
+                        <i class="fa-solid fa-eye" id="eyeIcon"></i>
+                    </span>
+                </div>
+            </div>
+            <button type="submit" class="login-button">ENTRAR</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const togglePassword = document.querySelector('#togglePassword');
+            const password = document.querySelector('#password');
+            const eyeIcon = document.querySelector('#eyeIcon');
+
+            togglePassword.addEventListener('click', function (e) {
+                const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+                password.setAttribute('type', type);
+                
+                eyeIcon.classList.toggle('fa-eye');
+                eyeIcon.classList.toggle('fa-eye-slash');
+            });
+        });
+    </script>
+</body>
+</html>

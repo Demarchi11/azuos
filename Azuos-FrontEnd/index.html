@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Azuos</title>
+    <link rel="stylesheet" href="../Azuos-FrontEnd/styles/index.css">
+    
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <img class="logo-img" src="assets/icon.png" alt="Icone Azuos">
+        </div>
+        
+        <div class="nav-container">
+            <div class="brand-name">Plataforma Azuos</div>
+            <nav>
+                <ul>
+                    <li><a href="#quem-somos">Quem Somos?</a></li>
+                    <li><a href="#servicos">Nossos Serviços.</a></li>
+                    <li><a href="#contato">Entre em Contato!</a></li>
+                </ul>
+            </nav>
+            <button class="login-btn" onclick="window.location.href='pages/login.html'">Login</button>
+        </div>
+    </header>
+
+    <main>
+        <h1 class="main-title">AZUOS</h1>
+        <h2 class="subtitle">Capacitação de líderes éticos</h2>
+        
+        <div class="info-pill">
+            + Eficiência, produtividade e engajamento de líderes e funcionários.
+        </div>
+
+        <div class="scroll-arrow" onclick="rolarParaBaixo()">
+            <svg viewBox="0 0 24 40">
+                <line x1="12" y1="0" x2="12" y2="38"></line>
+                <polyline points="4,30 12,38 20,30"></polyline>
+            </svg>
+        </div>
+    </main>
+
+    <script>
+
+        function rolarParaBaixo() {
+            window.scrollBy({ 
+                top: window.innerHeight, 
+                behavior: 'smooth' 
+            });
+        }
+    </script>
+</body>
+</html>
