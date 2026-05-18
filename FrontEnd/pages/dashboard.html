@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Plataforma Azuos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+    <link rel="stylesheet" href="../css/pages/dashboard.css">
+</head>
+<body class="app-body" data-page-type="app" data-page-file="dashboard.html">
+    <button class="mobile-toggle" type="button" data-sidebar-toggle aria-label="Abrir menu lateral">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="overlay" id="overlay" data-sidebar-close></div>
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <div class="main-shell">
+        <header class="topbar">
+            <div class="topbar__left">
+                <p class="topbar__eyebrow">Painel operacional</p>
+                <h1>Visao geral</h1>
+                <p id="greetMsg">Carregando sessao...</p>
+            </div>
+            <div class="topbar__right">
+                <a class="btn btn-primary btn--sm" href="formulario.html">
+                    <i class="fa-solid fa-plus"></i>
+                    Novo formulario
+                </a>
+            </div>
+        </header>
+
+        <main class="app-content">
+            <section class="panel panel--gradient dashboard-hero fade-in">
+                <div class="score-ring">
+                    <svg viewBox="0 0 120 120">
+                        <circle class="score-ring__bg" cx="60" cy="60" r="55"></circle>
+                        <circle class="score-ring__fill" cx="60" cy="60" r="55" id="ringFill"></circle>
+                    </svg>
+                    <div class="score-ring__center">
+                        <div class="score-ring__value" id="scoreNum">--</div>
+                        <div class="score-ring__label">ultima analise</div>
+                    </div>
+                </div>
+
+                <div>
+                    <h2 class="dashboard-hero__title" id="dashboardHeroTitle">
+                        Aguardando retorno do backend
+                    </h2>
+                    <p class="dashboard-hero__desc" id="dashboardHeroDesc">
+                        Este painel so passa a mostrar indicadores quando houver cadastros, envios de formulario e analises devolvidas pelo servidor.
+                    </p>
+                    <div class="dashboard-tags" id="dashboardTags"></div>
+                </div>
+            </section>
+
+            <section class="stats-grid">
+                <article class="panel stat-card fade-in">
+                    <div class="stat-card__icon stat-card__icon--accent">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                    </div>
+                    <div>
+                        <div class="stat-card__value" id="metricSubmissions">0</div>
+                        <div class="stat-card__label">Formularios enviados</div>
+                        <div class="stat-card__delta" id="metricSubmissionsMeta">Sem dados ainda</div>
+                    </div>
+                </article>
+
+                <article class="panel stat-card fade-in">
+                    <div class="stat-card__icon stat-card__icon--primary">
+                        <i class="fa-solid fa-hourglass-half"></i>
+                    </div>
+                    <div>
+                        <div class="stat-card__value" id="metricPending">0</div>
+                        <div class="stat-card__label">Analises pendentes</div>
+                        <div class="stat-card__delta" id="metricPendingMeta">Aguardando processamento</div>
+                    </div>
+                </article>
+
+                <article class="panel stat-card fade-in">
+                    <div class="stat-card__icon stat-card__icon--success">
+                        <i class="fa-solid fa-file-circle-check"></i>
+                    </div>
+                    <div>
+                        <div class="stat-card__value" id="metricCompleted">0</div>
+                        <div class="stat-card__label">Analises prontas</div>
+                        <div class="stat-card__delta" id="metricCompletedMeta">Sem relatorios liberados</div>
+                    </div>
+                </article>
+
+                <article class="panel stat-card fade-in">
+                    <div class="stat-card__icon stat-card__icon--purple">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div>
+                        <div class="stat-card__value" id="metricTeam">0</div>
+                        <div class="stat-card__label" id="metricTeamLabel">Equipe cadastrada</div>
+                        <div class="stat-card__delta" id="metricTeamMeta">Cadastre pessoas para iniciar</div>
+                    </div>
+                </article>
+            </section>
+
+            <section class="dashboard-grid-3 fade-in">
+                <article class="panel panel-content">
+                    <div class="panel__header">
+                        <span class="panel__title">Ultimos envios</span>
+                        <a class="panel__link" href="historico.html">Ver historico -&gt;</a>
+                    </div>
+                    <div id="recentSubmissionsList"></div>
+                </article>
+
+                <article class="panel panel-content">
+                    <div class="panel__header">
+                        <span class="panel__title">Status da analise</span>
+                        <a class="panel__link" href="historico.html">Ver detalhes -&gt;</a>
+                    </div>
+                    <div class="insight-list" id="analysisStatusList"></div>
+                </article>
+            </section>
+
+            <section class="dashboard-grid-2 fade-in">
+                <article class="panel panel-content">
+                    <div class="panel__header">
+                        <span class="panel__title" id="teamPanelTitle">Equipe e acesso</span>
+                        <a class="panel__link" href="equipe.html">Abrir equipe -&gt;</a>
+                    </div>
+                    <div id="teamSnapshotList"></div>
+                </article>
+
+                <article class="panel panel-content">
+                    <div class="panel__header">
+                        <span class="panel__title">Proximos passos</span>
+                    </div>
+                    <div class="next-actions" id="nextStepsList"></div>
+                </article>
+            </section>
+        </main>
+    </div>
+
+    <script src="../js/utils.js" defer></script>
+    <script src="../js/auth.js" defer></script>
+    <script src="../js/api.js" defer></script>
+    <script src="../js/main.js" defer></script>
+    <script src="../js/pages/dashboard.js" defer></script>
+</body>
+</html>

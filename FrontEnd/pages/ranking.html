@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking | Plataforma Azuos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+    <link rel="stylesheet" href="../css/pages/ranking.css">
+</head>
+<body class="app-body" data-page-type="app" data-page-file="ranking.html">
+    <button class="mobile-toggle" type="button" data-sidebar-toggle aria-label="Abrir menu lateral">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="overlay" id="overlay" data-sidebar-close></div>
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <div class="main-shell">
+        <header class="topbar">
+            <div class="topbar__left">
+                <p class="topbar__eyebrow">Gestao</p>
+                <h1>Ranking de performance</h1>
+                <p>Comparativo liberado apenas quando o backend devolver scores analisados.</p>
+            </div>
+        </header>
+
+        <main class="app-content">
+            <section class="ranking-filters fade-in">
+                <select id="filterDept">
+                    <option value="">Todos os departamentos</option>
+                </select>
+                <select id="filterStatus">
+                    <option value="">Todos os status</option>
+                    <option value="acima">Acima da expectativa</option>
+                    <option value="dentro">Dentro da expectativa</option>
+                    <option value="abaixo">Abaixo da expectativa</option>
+                    <option value="critico">Critico</option>
+                </select>
+                <select id="filterOrder">
+                    <option value="desc">Maior pontuacao</option>
+                    <option value="asc">Menor pontuacao</option>
+                </select>
+            </section>
+
+            <section class="panel panel--gradient podium-card fade-in">
+                <p class="podium-title">Top 3 da base analisada</p>
+                <div class="podium-wrap" id="podium"></div>
+            </section>
+
+            <section class="panel ranking-table fade-in">
+                <div class="ranking-table__header">
+                    <h3>Classificacao geral</h3>
+                    <span class="ranking-table__count" id="tableCount"></span>
+                </div>
+                <div class="ranking-table__scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="ranking-table__col-pos">Pos</th>
+                                <th>Funcionario</th>
+                                <th class="hide-mobile">Departamento</th>
+                                <th>Status</th>
+                                <th class="ranking-table__col-score">Score</th>
+                                <th class="hide-mobile">Progresso</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="../js/utils.js" defer></script>
+    <script src="../js/auth.js" defer></script>
+    <script src="../js/api.js" defer></script>
+    <script src="../js/main.js" defer></script>
+    <script src="../js/pages/ranking.js" defer></script>
+</body>
+</html>
