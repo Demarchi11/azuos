@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico | Plataforma Azuos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+    <link rel="stylesheet" href="../css/pages/historico.css">
+</head>
+<body class="app-body" data-page-type="app" data-page-file="historico.html">
+    <button class="mobile-toggle" type="button" data-sidebar-toggle aria-label="Abrir menu lateral">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="overlay" id="overlay" data-sidebar-close></div>
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <div class="main-shell">
+        <header class="topbar">
+            <div class="topbar__left">
+                <p class="topbar__eyebrow">Relatórios</p>
+                <h1>Histórico de avaliações</h1>
+                <p>Todos os seus relatórios e PDFs gerados.</p>
+            </div>
+            <div class="topbar__right">
+                <a class="btn btn-primary btn--sm" href="formulario.html">
+                    <i class="fa-solid fa-plus"></i>
+                    Nova avaliação
+                </a>
+            </div>
+        </header>
+
+        <main class="app-content">
+            <section class="panel legend-bar fade-in">
+                <span class="legend-bar__title">Níveis</span>
+                <span class="legend-chip legend-chip--blue"><span class="legend-chip__dot"></span>Acima da expectativa</span>
+                <span class="legend-chip legend-chip--green"><span class="legend-chip__dot"></span>Dentro da expectativa</span>
+                <span class="legend-chip legend-chip--yellow"><span class="legend-chip__dot"></span>Abaixo da expectativa</span>
+                <span class="legend-chip legend-chip--red"><span class="legend-chip__dot"></span>Crítico</span>
+            </section>
+
+            <section class="mini-stats fade-in">
+                <article class="panel mini-stat mini-stat--blue">
+                    <span class="mini-stat__dot"></span>
+                    <div>
+                        <div class="mini-stat__value">1</div>
+                        <div class="mini-stat__label">Acima da expectativa</div>
+                    </div>
+                </article>
+                <article class="panel mini-stat mini-stat--green">
+                    <span class="mini-stat__dot"></span>
+                    <div>
+                        <div class="mini-stat__value">1</div>
+                        <div class="mini-stat__label">Dentro da expectativa</div>
+                    </div>
+                </article>
+                <article class="panel mini-stat mini-stat--yellow">
+                    <span class="mini-stat__dot"></span>
+                    <div>
+                        <div class="mini-stat__value">1</div>
+                        <div class="mini-stat__label">Abaixo da expectativa</div>
+                    </div>
+                </article>
+                <article class="panel mini-stat mini-stat--red">
+                    <span class="mini-stat__dot"></span>
+                    <div>
+                        <div class="mini-stat__value">1</div>
+                        <div class="mini-stat__label">Crítico</div>
+                    </div>
+                </article>
+            </section>
+
+            <section class="filters-row fade-in">
+                <span class="filters-row__label">Filtrar</span>
+                <button class="filter-button is-active" type="button" data-filter="todos">Todos</button>
+                <button class="filter-button" type="button" data-filter="azul">Acima</button>
+                <button class="filter-button" type="button" data-filter="verde">Dentro</button>
+                <button class="filter-button" type="button" data-filter="amarelo">Abaixo</button>
+                <button class="filter-button" type="button" data-filter="vermelho">Crítico</button>
+
+                <label class="search-box" for="searchInput">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input id="searchInput" type="text" placeholder="Buscar avaliação...">
+                </label>
+            </section>
+
+            <section class="history-list" id="historicoList">
+                <article class="panel history-card history-card--blue fade-in" data-level="azul" data-title="Avaliação de Liderança Inclusiva">
+                    <div class="pdf-icon">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <span>PDF</span>
+                    </div>
+                    <div class="history-card__body">
+                        <div class="history-card__header">
+                            <div>
+                                <h2 class="history-card__title">Avaliação de Liderança Inclusiva</h2>
+                                <div class="history-meta">
+                                    <span><i class="fa-regular fa-calendar"></i>12 abr. 2025</span>
+                                    <span><i class="fa-regular fa-clock"></i>23 min</span>
+                                    <span><i class="fa-regular fa-circle-question"></i>24 questões</span>
+                                </div>
+                            </div>
+                            <div class="history-score">
+                                <div class="score-circle score-circle--blue">78</div>
+                                <span class="badge badge--info">Acima</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-tags">
+                            <span class="skill-tag skill-tag--comunicacao">Comunicação</span>
+                            <span class="skill-tag skill-tag--equipe">Trabalho em equipe</span>
+                            <span class="skill-tag skill-tag--lideranca">Liderança</span>
+                            <span class="skill-tag skill-tag--inclusao">Inclusão</span>
+                            <span class="skill-tag skill-tag--empatia">Empatia</span>
+                        </div>
+
+                        <div class="history-footer">
+                            <button class="action-button action-button--primary" type="button" data-history-action="download" data-report-label="Avaliação de Liderança Inclusiva">
+                                <i class="fa-solid fa-download"></i>Baixar PDF
+                            </button>
+                            <a class="action-button" href="relatorios.html">
+                                <i class="fa-solid fa-eye"></i>Ver relatório IA
+                            </a>
+                            <button class="action-button" type="button" data-history-action="share" data-report-label="Avaliação de Liderança Inclusiva">
+                                <i class="fa-solid fa-share-nodes"></i>Compartilhar
+                            </button>
+                            <span class="history-ai-badge"><i class="fa-solid fa-robot"></i>Análise IA disponível</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="panel history-card history-card--green fade-in" data-level="verde" data-title="Diagnóstico de Compliance ESG">
+                    <div class="pdf-icon">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <span>PDF</span>
+                    </div>
+                    <div class="history-card__body">
+                        <div class="history-card__header">
+                            <div>
+                                <h2 class="history-card__title">Diagnóstico de Compliance ESG</h2>
+                                <div class="history-meta">
+                                    <span><i class="fa-regular fa-calendar"></i>18 mar. 2025</span>
+                                    <span><i class="fa-regular fa-clock"></i>31 min</span>
+                                    <span><i class="fa-regular fa-circle-question"></i>28 questões</span>
+                                </div>
+                            </div>
+                            <div class="history-score">
+                                <div class="score-circle score-circle--green">64</div>
+                                <span class="badge badge--success">Dentro</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-tags">
+                            <span class="skill-tag skill-tag--proatividade">Proatividade</span>
+                            <span class="skill-tag skill-tag--equipe">Trabalho em equipe</span>
+                            <span class="skill-tag skill-tag--adaptabilidade">Adaptabilidade</span>
+                            <span class="skill-tag skill-tag--comunicacao">Comunicação</span>
+                        </div>
+
+                        <div class="history-footer">
+                            <button class="action-button action-button--primary" type="button" data-history-action="download" data-report-label="Diagnóstico de Compliance ESG">
+                                <i class="fa-solid fa-download"></i>Baixar PDF
+                            </button>
+                            <a class="action-button" href="relatorios.html">
+                                <i class="fa-solid fa-eye"></i>Ver relatório IA
+                            </a>
+                            <button class="action-button" type="button" data-history-action="share" data-report-label="Diagnóstico de Compliance ESG">
+                                <i class="fa-solid fa-share-nodes"></i>Compartilhar
+                            </button>
+                            <span class="history-ai-badge"><i class="fa-solid fa-robot"></i>Análise IA disponível</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="panel history-card history-card--yellow fade-in" data-level="amarelo" data-title="Avaliação de Comunicação Inclusiva">
+                    <div class="pdf-icon">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <span>PDF</span>
+                    </div>
+                    <div class="history-card__body">
+                        <div class="history-card__header">
+                            <div>
+                                <h2 class="history-card__title">Avaliação de Comunicação Inclusiva</h2>
+                                <div class="history-meta">
+                                    <span><i class="fa-regular fa-calendar"></i>25 jan. 2025</span>
+                                    <span><i class="fa-regular fa-clock"></i>18 min</span>
+                                    <span><i class="fa-regular fa-circle-question"></i>20 questões</span>
+                                </div>
+                            </div>
+                            <div class="history-score">
+                                <div class="score-circle score-circle--yellow">48</div>
+                                <span class="badge badge--warning">Abaixo</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-tags">
+                            <span class="skill-tag skill-tag--comunicacao">Comunicação</span>
+                            <span class="skill-tag skill-tag--conflitos">Conflitos</span>
+                            <span class="skill-tag skill-tag--empatia">Empatia</span>
+                        </div>
+
+                        <div class="history-footer">
+                            <button class="action-button action-button--primary" type="button" data-history-action="download" data-report-label="Avaliação de Comunicação Inclusiva">
+                                <i class="fa-solid fa-download"></i>Baixar PDF
+                            </button>
+                            <a class="action-button" href="relatorios.html">
+                                <i class="fa-solid fa-eye"></i>Ver relatório IA
+                            </a>
+                            <button class="action-button" type="button" data-history-action="share" data-report-label="Avaliação de Comunicação Inclusiva">
+                                <i class="fa-solid fa-share-nodes"></i>Compartilhar
+                            </button>
+                            <span class="history-ai-badge"><i class="fa-solid fa-robot"></i>Análise IA disponível</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="panel history-card history-card--red fade-in" data-level="vermelho" data-title="Avaliação Inicial — Capacitismo">
+                    <div class="pdf-icon">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <span>PDF</span>
+                    </div>
+                    <div class="history-card__body">
+                        <div class="history-card__header">
+                            <div>
+                                <h2 class="history-card__title">Avaliação Inicial — Capacitismo</h2>
+                                <div class="history-meta">
+                                    <span><i class="fa-regular fa-calendar"></i>02 fev. 2025</span>
+                                    <span><i class="fa-regular fa-clock"></i>27 min</span>
+                                    <span><i class="fa-regular fa-circle-question"></i>26 questões</span>
+                                </div>
+                            </div>
+                            <div class="history-score">
+                                <div class="score-circle score-circle--red">31</div>
+                                <span class="badge badge--danger">Crítico</span>
+                            </div>
+                        </div>
+
+                        <div class="skill-tags">
+                            <span class="skill-tag skill-tag--inclusao">Inclusão</span>
+                            <span class="skill-tag skill-tag--lideranca">Liderança</span>
+                            <span class="skill-tag skill-tag--conflitos">Conflitos</span>
+                            <span class="skill-tag skill-tag--proatividade">Proatividade</span>
+                        </div>
+
+                        <div class="history-footer">
+                            <button class="action-button action-button--primary" type="button" data-history-action="download" data-report-label="Avaliação Inicial — Capacitismo">
+                                <i class="fa-solid fa-download"></i>Baixar PDF
+                            </button>
+                            <a class="action-button" href="relatorios.html">
+                                <i class="fa-solid fa-eye"></i>Ver relatório IA
+                            </a>
+                            <button class="action-button" type="button" data-history-action="share" data-report-label="Avaliação Inicial — Capacitismo">
+                                <i class="fa-solid fa-share-nodes"></i>Compartilhar
+                            </button>
+                            <span class="history-ai-badge"><i class="fa-solid fa-robot"></i>Análise IA disponível</span>
+                        </div>
+                    </div>
+                </article>
+            </section>
+
+            <div class="empty-state" id="emptyState">
+                <i class="fa-solid fa-folder-open"></i>
+                <p>Nenhuma avaliação encontrada para esse filtro.</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/utils.js" defer></script>
+    <script src="../js/auth.js" defer></script>
+    <script src="../js/main.js" defer></script>
+    <script src="../js/pages/historico.js" defer></script>
+</body>
+</html>
