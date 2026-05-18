@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipe | Plataforma Azuos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+    <link rel="stylesheet" href="../css/pages/equipe.css">
+</head>
+<body class="app-body" data-page-type="app" data-page-file="equipe.html">
+    <button class="mobile-toggle" type="button" data-sidebar-toggle aria-label="Abrir menu lateral">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="overlay" id="overlay" data-sidebar-close></div>
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <div class="main-shell">
+        <header class="topbar">
+            <div class="topbar__left">
+                <p class="topbar__eyebrow">Equipe</p>
+                <h1>Cadastro e acompanhamento</h1>
+                <p>Lideres criam os acessos da base e funcionarios seguem usando o fluxo de formularios.</p>
+            </div>
+        </header>
+
+        <main class="app-content">
+            <section class="panel panel--gradient page-overview">
+                <div>
+                    <p class="section-kicker">Estrutura operacional</p>
+                    <h2 class="page-overview__title">Uma base sem dados fixos, pronta para crescer com os cadastros reais.</h2>
+                    <p class="page-overview__text" id="teamOverviewText">
+                        Os acessos cadastrados aqui passam a usar os formularios normalmente, enquanto dashboard, historico e ranking refletem apenas o que vier do servidor.
+                    </p>
+                    <div class="page-overview__chips" id="teamOverviewChips">
+                        <span class="chip chip--primary">Sem valores predefinidos</span>
+                        <span class="chip chip--accent">Cadastro de equipe</span>
+                        <span class="chip chip--success">Fluxo pronto para API</span>
+                    </div>
+                </div>
+
+                <div class="page-kpi-grid">
+                    <article class="page-kpi-card">
+                        <span class="page-kpi-card__label">Lideranca ativa</span>
+                        <span class="page-kpi-card__value" id="teamLeaderValue">--</span>
+                        <span class="page-kpi-card__text">Conta responsavel pelo cadastro da base atual.</span>
+                    </article>
+                    <article class="page-kpi-card">
+                        <span class="page-kpi-card__label">Funcionarios cadastrados</span>
+                        <span class="page-kpi-card__value" id="teamCountValue">0</span>
+                        <span class="page-kpi-card__text" id="teamCountText">Nenhuma pessoa cadastrada ainda.</span>
+                    </article>
+                </div>
+            </section>
+
+            <section class="page-grid-2 team-grid">
+                <article class="panel page-info-card">
+                    <div class="panel__header">
+                        <span class="panel__title">Cadastrar funcionario</span>
+                        <span class="badge badge--primary" id="teamAccessBadge">Carregando</span>
+                    </div>
+                    <p class="page-info-card__text" id="teamFormText">
+                        O formulario abaixo cria um acesso real para a pessoa entrar e responder os formularios.
+                    </p>
+
+                    <div class="team-locked hidden" id="memberFormLocked">
+                        Somente lideres podem cadastrar funcionarios. Seu acesso continua habilitado para responder formularios.
+                    </div>
+
+                    <form class="team-form" id="memberForm" novalidate>
+                        <div class="field">
+                            <label class="field__label" for="memberName">Nome</label>
+                            <div class="input-shell">
+                                <i class="fa-solid fa-user input-shell__icon"></i>
+                                <input class="input-shell__control" id="memberName" type="text" placeholder="Nome completo" required>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="field__label" for="memberUsername">Usuario</label>
+                            <div class="input-shell">
+                                <i class="fa-solid fa-at input-shell__icon"></i>
+                                <input class="input-shell__control" id="memberUsername" type="text" placeholder="login de acesso" required>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="field__label" for="memberDepartment">Area</label>
+                            <div class="input-shell">
+                                <i class="fa-solid fa-building input-shell__icon"></i>
+                                <input class="input-shell__control" id="memberDepartment" type="text" placeholder="Ex.: Producao">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="field__label" for="memberPosition">Cargo</label>
+                            <div class="input-shell">
+                                <i class="fa-solid fa-briefcase input-shell__icon"></i>
+                                <input class="input-shell__control" id="memberPosition" type="text" placeholder="Ex.: Operador">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="field__label" for="memberPassword">Senha inicial</label>
+                            <div class="input-shell">
+                                <i class="fa-solid fa-lock input-shell__icon"></i>
+                                <input class="input-shell__control" id="memberPassword" type="password" placeholder="Defina a senha inicial" required>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" id="memberSubmit" type="submit">
+                            <span data-button-text>Cadastrar funcionario</span>
+                        </button>
+                    </form>
+                </article>
+
+                <article class="panel page-info-card">
+                    <div class="panel__header">
+                        <span class="panel__title">Base cadastrada</span>
+                        <a class="panel__link" href="formulario.html">Abrir formularios -&gt;</a>
+                    </div>
+                    <p class="page-info-card__text">
+                        Cada pessoa listada abaixo recebe um acesso real e passa a alimentar o fluxo de formularios.
+                    </p>
+                    <div class="team-members" id="teamMembersList"></div>
+                    <div class="team-empty hidden" id="teamEmptyState">
+                        Nenhum funcionario foi cadastrado ainda.
+                    </div>
+                </article>
+            </section>
+        </main>
+    </div>
+
+    <script src="../js/utils.js" defer></script>
+    <script src="../js/auth.js" defer></script>
+    <script src="../js/api.js" defer></script>
+    <script src="../js/main.js" defer></script>
+    <script src="../js/pages/equipe.js" defer></script>
+</body>
+</html>

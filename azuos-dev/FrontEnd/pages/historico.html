@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historico | Plataforma Azuos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+    <link rel="stylesheet" href="../css/pages/historico.css">
+</head>
+<body class="app-body" data-page-type="app" data-page-file="historico.html">
+    <button class="mobile-toggle" type="button" data-sidebar-toggle aria-label="Abrir menu lateral">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="overlay" id="overlay" data-sidebar-close></div>
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <div class="main-shell">
+        <header class="topbar">
+            <div class="topbar__left">
+                <p class="topbar__eyebrow">Historico</p>
+                <h1>Envios e analises</h1>
+                <p>Esta pagina mostra apenas o que o servidor ja recebeu e o que a analise ja devolveu.</p>
+            </div>
+            <div class="topbar__right">
+                <a class="btn btn-primary btn--sm" href="formulario.html">
+                    <i class="fa-solid fa-plus"></i>
+                    Novo envio
+                </a>
+            </div>
+        </header>
+
+        <main class="app-content">
+            <section class="panel legend-bar fade-in">
+                <span class="legend-bar__title">Status</span>
+                <span class="legend-chip legend-chip--green"><span class="legend-chip__dot"></span>Analise pronta</span>
+                <span class="legend-chip legend-chip--yellow"><span class="legend-chip__dot"></span>Aguardando backend</span>
+                <span class="legend-chip legend-chip--blue"><span class="legend-chip__dot"></span>Score disponivel</span>
+            </section>
+
+            <section class="mini-stats fade-in">
+                <article class="panel mini-stat mini-stat--blue">
+                    <span class="mini-stat__dot"></span>
+                    <div>
+                        <div class="mini-stat__value" id="historyTotalCount">0</div>
+                        <div class="mini-stat__label">Envios registrados</div>
+                    </div>
+                </article>
+                <article class="panel mini-stat mini-stat--yellow">
+                    <span class="mini-stat__dot"></span>
+                    <div>
+                        <div class="mini-stat__value" id="historyPendingCount">0</div>
+                        <div class="mini-stat__label">Aguardando analise</div>
+                    </div>
+                </article>
+                <article class="panel mini-stat mini-stat--green">
+                    <span class="mini-stat__dot"></span>
+                    <div>
+                        <div class="mini-stat__value" id="historyReadyCount">0</div>
+                        <div class="mini-stat__label">Analises prontas</div>
+                    </div>
+                </article>
+            </section>
+
+            <section class="filters-row fade-in">
+                <span class="filters-row__label">Filtrar</span>
+                <button class="filter-button is-active" type="button" data-filter="todos">Todos</button>
+                <button class="filter-button" type="button" data-filter="pending">Pendentes</button>
+                <button class="filter-button" type="button" data-filter="completed">Prontas</button>
+
+                <label class="search-box" for="searchInput">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input id="searchInput" type="text" placeholder="Buscar bloco enviado...">
+                </label>
+            </section>
+
+            <section class="history-list" id="historicoList"></section>
+
+            <div class="empty-state" id="emptyState">
+                <i class="fa-solid fa-folder-open"></i>
+                <p>Nenhum envio encontrado para o filtro atual.</p>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/utils.js" defer></script>
+    <script src="../js/auth.js" defer></script>
+    <script src="../js/api.js" defer></script>
+    <script src="../js/main.js" defer></script>
+    <script src="../js/pages/historico.js" defer></script>
+</body>
+</html>

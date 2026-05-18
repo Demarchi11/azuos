@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuracoes | Plataforma Azuos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="../css/utilities.css">
+</head>
+<body class="app-body" data-page-type="app" data-page-file="configuracoes.html">
+    <button class="mobile-toggle" type="button" data-sidebar-toggle aria-label="Abrir menu lateral">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+    <div class="overlay" id="overlay" data-sidebar-close></div>
+    <aside class="sidebar" id="sidebar"></aside>
+
+    <div class="main-shell">
+        <header class="topbar">
+            <div class="topbar__left">
+                <p class="topbar__eyebrow">Sistema</p>
+                <h1>Configuracoes</h1>
+                <p>Area organizada para preferencia, seguranca e governanca da experiencia.</p>
+            </div>
+        </header>
+
+        <main class="app-content">
+            <section class="panel panel--gradient page-overview">
+                <div>
+                    <p class="section-kicker">Controle da plataforma</p>
+                    <h2 class="page-overview__title">Um espaco mais claro para ajustar perfil, acessos e comportamentos do sistema.</h2>
+                    <p class="page-overview__text">
+                        Em vez de uma tela vazia, a estrutura ja sugere como agrupar preferencias e reduzir a carga cognitiva do usuario na hora de configurar a conta.
+                    </p>
+                    <div class="page-overview__chips">
+                        <span class="chip chip--primary">Perfil</span>
+                        <span class="chip chip--accent">Seguranca</span>
+                        <span class="chip chip--success">Integracoes</span>
+                    </div>
+                </div>
+
+                <div class="page-kpi-grid">
+                    <article class="page-kpi-card">
+                        <span class="page-kpi-card__label">Areas principais</span>
+                        <span class="page-kpi-card__value">3 grupos</span>
+                        <span class="page-kpi-card__text">Perfil, preferencias operacionais e controles de acesso em blocos separados.</span>
+                    </article>
+                    <article class="page-kpi-card">
+                        <span class="page-kpi-card__label">Escopo corporativo</span>
+                        <span class="page-kpi-card__value">1 ambiente</span>
+                        <span class="page-kpi-card__text">Base pronta para definir politicas, notificacoes e permissao por papel.</span>
+                    </article>
+                </div>
+            </section>
+
+            <section class="page-grid-2">
+                <article class="panel page-info-card">
+                    <h3 class="page-info-card__title">Ajustes que fazem sentido aqui</h3>
+                    <p class="page-info-card__text">
+                        Separar por tema deixa a navegacao mais previsivel e reduz a sensacao de pagina pesada.
+                    </p>
+                    <ul class="page-list">
+                        <li class="page-list__item">
+                            <span class="page-list__icon"><i class="fa-solid fa-id-card"></i></span>
+                            <div>
+                                <p class="page-list__title">Perfil e dados basicos</p>
+                                <p class="page-list__text">Nome, cargo, unidade, idioma e informacoes de contato do usuario.</p>
+                            </div>
+                        </li>
+                        <li class="page-list__item">
+                            <span class="page-list__icon"><i class="fa-solid fa-shield-halved"></i></span>
+                            <div>
+                                <p class="page-list__title">Seguranca e acesso</p>
+                                <p class="page-list__text">Senha, papel, sessoes ativas e futuras politicas de autenticacao.</p>
+                            </div>
+                        </li>
+                        <li class="page-list__item">
+                            <span class="page-list__icon"><i class="fa-solid fa-sliders"></i></span>
+                            <div>
+                                <p class="page-list__title">Preferencias da experiencia</p>
+                                <p class="page-list__text">Notificacoes, exibicao de alertas e caminhos de navegacao mais usados.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </article>
+
+                <article class="panel page-info-card">
+                    <h3 class="page-info-card__title">Proximos acessos</h3>
+                    <p class="page-info-card__text">
+                        Esta tela ganha mais valor quando conecta o usuario rapidamente aos pontos de controle mais proximos.
+                    </p>
+                    <div class="page-actions">
+                        <a class="btn btn-primary" href="notificacoes.html">Abrir notificacoes</a>
+                        <a class="btn btn-secondary" href="dashboard.html">Voltar ao painel</a>
+                    </div>
+                    <div class="page-note">
+                        Quando evoluir, esta area pode concentrar permissoes, configuracoes de acessibilidade e integracoes com o restante da plataforma.
+                    </div>
+                </article>
+            </section>
+        </main>
+    </div>
+
+    <script src="../js/utils.js" defer></script>
+    <script src="../js/auth.js" defer></script>
+    <script src="../js/main.js" defer></script>
+</body>
+</html>
