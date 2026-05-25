@@ -42,7 +42,8 @@ class FormularioPage {
 
       // Seleciona primeiro formulário
       this.currentFormIndex = 0;
-      await this.loadForm(this.allForms[0].id);
+      const firstFormId = this.allForms[0].id || this.allForms[0].formulario_id;
+      await this.loadForm(firstFormId);
 
       // Configura listeners
       this.setupEventListeners();
@@ -63,8 +64,8 @@ class FormularioPage {
       // Se o usuário tem role_id, busca formulário específico
       if (roleId) {
         try {
-          const form = await FormService.getByRole(roleId);
-          this.allForms = [form];
+          const formsByRole = await FormService.getByRole(roleId);
+          this.allForms = Array.isArray(formsByRole) ? formsByRole : [formsByRole];
           return;
         } catch (error) {
           console.warn('Formulário por cargo não encontrado:', error);
@@ -122,7 +123,8 @@ class FormularioPage {
   async switchForm(index) {
     if (index !== this.currentFormIndex) {
       this.currentFormIndex = index;
-      await this.loadForm(this.allForms[index].id);
+      const targetFormId = this.allForms[index].id || this.allForms[index].formulario_id;
+      await this.loadForm(targetFormId);
     }
   }
 
@@ -141,8 +143,9 @@ class FormularioPage {
       button.className = 'question-btn';
       button.textContent = `${index + 1}`;
       
+      const questionId = question.id || question.pergunta_id;
       // Marca como respondida se houver resposta
-      if (this.answers[question.id]) {
+      if (this.answers[questionId]) {
         button.classList.add('question-btn--answered');
       }
 
@@ -174,12 +177,13 @@ class FormularioPage {
     const answersList = document.getElementById('answersList');
     answersList.innerHTML = '';
 
+    const questionId = currentQuestion.id || currentQuestion.pergunta_id;
     const textarea = document.createElement('textarea');
-    textarea.id = `answer-${currentQuestion.id}`;
+    textarea.id = `answer-${questionId}`;
     textarea.className = 'question-textarea';
     textarea.placeholder = 'Digite sua resposta aqui...';
-    textarea.value = this.answers[currentQuestion.id] || '';
-    textarea.addEventListener('input', (e) => this.saveAnswer(currentQuestion.id, e.target.value));
+    textarea.value = this.answers[questionId] || '';
+    textarea.addEventListener('input', (e) => this.saveAnswer(questionId, e.target.value));
 
     answersList.appendChild(textarea);
 
@@ -210,7 +214,8 @@ class FormularioPage {
     this.answers[questionId] = answer;
     
     // Salva rascunho
-    FormService.saveDraft(this.currentForm.id, this.answers);
+    const formId = this.currentForm.id || this.currentForm.formulario_id;
+    FormService.saveDraft(formId, this.answers);
 
     // Atualiza mapa de perguntas
     this.renderQuestionMap();
@@ -226,14 +231,16 @@ class FormularioPage {
     const questions = this.currentForm.perguntas;
     const currentQuestion = questions[this.currentFormIndex];
     
+    const questionId = currentQuestion.id || currentQuestion.pergunta_id;
     if (confirm('Tem certeza que deseja limpar esta resposta?')) {
-      this.answers[currentQuestion.id] = '';
-      const textarea = document.getElementById(`answer-${currentQuestion.id}`);
+      this.answers[questionId] = '';
+      const textarea = document.getElementById(`answer-${questionId}`);
       if (textarea) textarea.value = '';
       
       this.renderQuestionMap();
       this.updateProgress();
-      FormService.saveDraft(this.currentForm.id, this.answers);
+      const formId = this.currentForm.id || this.currentForm.formulario_id;
+      FormService.saveDraft(formId, this.answers);
     }
   }
 
@@ -271,7 +278,10 @@ class FormularioPage {
    */
   async submitForm() {
     const questions = this.currentForm.perguntas;
-    const unanswered = questions.filter(q => !this.answers[q.id] || this.answers[q.id].trim() === '');
+    const unanswered = questions.filter(q => {
+      const qId = q.id || q.pergunta_id;
+      return !this.answers[qId] || this.answers[qId].trim() === '';
+    });
 
     if (unanswered.length > 0) {
       const confirm_submit = confirm(
@@ -285,13 +295,17 @@ class FormularioPage {
       UIUtils.setButtonLoading('submitButton', true);
 
       // Formata respostas
-      const respostas = questions.map(q => ({
-        pergunta_id: q.id,
-        resposta: this.answers[q.id] || ''
-      }));
+      const respostas = questions.map(q => {
+        const qId = q.id || q.pergunta_id;
+        return {
+          pergunta_id: qId,
+          resposta: this.answers[qId] || ''
+        };
+      });
 
       const userId = APIService.getUserId();
-      const result = await FormService.submitForm(userId, this.currentForm.id, respostas);
+      const formId = this.currentForm.id || this.currentForm.formulario_id;
+      const result = await FormService.submitForm(userId, formId, respostas);
 
       // Limpa rascunho
       FormService.clearDraft();

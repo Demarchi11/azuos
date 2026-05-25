@@ -32,6 +32,7 @@ class HistoricoPage {
    */
   renderHistory(history) {
     const historyContainer = document.getElementById('historyContainer') || 
+                             document.getElementById('historicoList') ||
                              document.querySelector('[data-history-list]') ||
                              document.querySelector('.submissions-list');
 
@@ -83,7 +84,7 @@ class HistoricoPage {
 
         <div class="submission-card__actions">
           ${report ? `
-            <button class="btn btn-secondary btn--sm" data-view-report="${submission.id}">
+            <button class="btn btn-secondary btn--sm" data-view-report="${submission.id || submission.submissao_id}">
               <i class="fa-solid fa-file-pdf"></i>
               Ver relatório completo
             </button>

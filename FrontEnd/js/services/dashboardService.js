@@ -28,12 +28,13 @@ class DashboardService {
       // Busca relatórios para cada submissão
       for (const submission of submissions) {
         try {
-          const report = await FormService.getReport(submission.id);
+          const subId = submission.id || submission.submissao_id;
+          const report = await FormService.getReport(subId);
           if (report) {
             completedAnalysis++;
             allReports.push(report);
             // Pega a pontuação mais recente
-            if (!latestScore || submission.id > allReports[allReports.length - 2]?.submissao_id) {
+            if (!latestScore || subId > allReports[allReports.length - 2]?.submissao_id) {
               latestScore = submission.pontuacao;
             }
           } else {
@@ -119,7 +120,8 @@ class DashboardService {
 
       for (const submission of submissions) {
         try {
-          const report = await FormService.getReport(submission.id);
+          const subId = submission.id || submission.submissao_id;
+          const report = await FormService.getReport(subId);
           history.push({
             submission,
             report

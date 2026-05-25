@@ -42,7 +42,7 @@ class AppPage {
     const user = APIService.getStoredUser();
 
     let html = `
-      <div class="sidebar__header">
+      <div class="sidebar__brand">
         <a class="brand brand--compact" href="dashboard.html">
           <img src="../assets/icons/icon.png" alt="Azuos">
           <span class="brand__text">Azuos</span>
@@ -50,23 +50,23 @@ class AppPage {
       </div>
 
       <nav class="sidebar__nav" aria-label="Principal">
-        <a href="dashboard.html" class="nav-link" data-page="dashboard">
+        <a href="dashboard.html" class="nav-item" data-page="dashboard">
           <i class="fa-solid fa-chart-line"></i>
           <span>Dashboard</span>
         </a>
-        <a href="formulario.html" class="nav-link" data-page="formulario">
+        <a href="formulario.html" class="nav-item" data-page="formulario">
           <i class="fa-solid fa-clipboard-list"></i>
           <span>Formulário</span>
         </a>
-        <a href="historico.html" class="nav-link" data-page="historico">
+        <a href="historico.html" class="nav-item" data-page="historico">
           <i class="fa-solid fa-history"></i>
           <span>Histórico</span>
         </a>
-        <a href="ranking.html" class="nav-link" data-page="ranking">
+        <a href="ranking.html" class="nav-item" data-page="ranking">
           <i class="fa-solid fa-trophy"></i>
           <span>Ranking</span>
         </a>
-        <a href="relatorios.html" class="nav-link" data-page="relatorios">
+        <a href="relatorios.html" class="nav-item" data-page="relatorios">
           <i class="fa-solid fa-file-lines"></i>
           <span>Relatórios</span>
         </a>
@@ -76,12 +76,12 @@ class AppPage {
     if (user.lider) {
       html += `
         <hr class="sidebar__divider">
-        <p class="sidebar__section-title">Liderança</p>
-        <a href="equipe.html" class="nav-link" data-page="equipe">
+        <p class="sidebar__label">Liderança</p>
+        <a href="equipe.html" class="nav-item" data-page="equipe">
           <i class="fa-solid fa-users"></i>
           <span>Equipe</span>
         </a>
-        <a href="trilhas.html" class="nav-link" data-page="trilhas">
+        <a href="trilhas.html" class="nav-item" data-page="trilhas">
           <i class="fa-solid fa-graduation-cap"></i>
           <span>Trilhas</span>
         </a>
@@ -90,11 +90,11 @@ class AppPage {
 
     html += `
         <hr class="sidebar__divider">
-        <a href="configuracoes.html" class="nav-link" data-page="configuracoes">
+        <a href="configuracoes.html" class="nav-item" data-page="configuracoes">
           <i class="fa-solid fa-gear"></i>
           <span>Configurações</span>
         </a>
-        <a href="notificacoes.html" class="nav-link" data-page="notificacoes">
+        <a href="notificacoes.html" class="nav-item" data-page="notificacoes">
           <i class="fa-solid fa-bell"></i>
           <span>Notificações</span>
         </a>
@@ -122,7 +122,7 @@ class AppPage {
     const currentPage = this.getCurrentPage();
     const activeLink = sidebar.querySelector(`[data-page="${currentPage}"]`);
     if (activeLink) {
-      activeLink.classList.add('nav-link--active');
+      activeLink.classList.add('is-active');
     }
   }
 
