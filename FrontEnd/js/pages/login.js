@@ -175,7 +175,6 @@ class LoginPage {
           APIService.setAuth(result.token, result);
         }
 
-        UIUtils.showSuccess('Liderança criada com sucesso!');
         UIUtils.redirect('dashboard.html', 1500);
       } else {
         this.showError('Erro ao criar liderança. Tente novamente.');
@@ -208,12 +207,13 @@ class LoginPage {
       const result = await AuthService.login(email, password);
 
       if (result && result.token) {
-        UIUtils.showSuccess('Login realizado com sucesso!');
         UIUtils.redirect('dashboard.html', 1000);
-      } else if (result && result.id) {
+      } else if (result && result.usuario) {
+        APIService.setAuth('session_token', result.usuario);
+        UIUtils.redirect('dashboard.html', 1000);
+      } else if (result && (result.id || result.usuario_id)) {
         // Alguns endpoints retornam o usuário sem token
         APIService.setAuth('session_token', result);
-        UIUtils.showSuccess('Login realizado com sucesso!');
         UIUtils.redirect('dashboard.html', 1000);
       } else {
         this.showError('Erro ao fazer login. Verifique as credenciais.');

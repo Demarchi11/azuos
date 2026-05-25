@@ -21,7 +21,9 @@ class AuthService {
 
     // Armazena o token e dados do usuário
     if (response.token) {
-      APIService.setAuth(response.token, response.user || response);
+      APIService.setAuth(response.token, response.usuario || response.user || response);
+    } else if (response.usuario) {
+      APIService.setAuth('session_token', response.usuario);
     }
 
     return response;

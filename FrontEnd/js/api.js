@@ -55,10 +55,12 @@ class APIService {
     if (!response.ok) {
       const errorMessage = data.message || data.error || `Erro ${response.status}`;
       
-      // Se for 401, limpa autenticação
+      // Se for 401, limpa autenticação e redireciona (se não estiver já na página de login)
       if (response.status === 401) {
         this.clearAuth();
-        window.location.href = 'login.html';
+        if (!window.location.pathname.endsWith('login.html')) {
+          window.location.href = 'login.html';
+        }
       }
 
       throw new Error(errorMessage);
@@ -101,8 +103,8 @@ class APIService {
   static setAuth(token, user) {
     localStorage.setItem(APP_CONFIG.STORAGE_KEYS.TOKEN, token);
     localStorage.setItem(APP_CONFIG.STORAGE_KEYS.USER, JSON.stringify(user));
-    if (user.id) {
-      localStorage.setItem(APP_CONFIG.STORAGE_KEYS.USER_ID, user.id);
+    if (user.id || user.usuario_id) {
+      localStorage.setItem(APP_CONFIG.STORAGE_KEYS.USER_ID, user.id || user.usuario_id);
     }
     if (user.role_id) {
       localStorage.setItem(APP_CONFIG.STORAGE_KEYS.ROLE_ID, user.role_id);
