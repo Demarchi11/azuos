@@ -1,3 +1,16 @@
+/* ========== ANIMAÇÕES DE REVEAL ========== */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ========== HOME BODY ========== */
 .home-body {
     color: var(--color-text-strong);
 }
