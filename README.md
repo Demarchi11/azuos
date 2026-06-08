@@ -10,9 +10,12 @@
 - [Nicolas Esteves Caetano Moreira](https://github.com/Nicolaspity): <nicolas.e.moreira@gmail.com>;
 - [Thiago Coelho Tesch](https://github.com/Thiagotesch7): <thiagotesch7@gmail.com>;
 
-### Demanda da Indústria SAGA SENAI de Inovação
+### Demanda da Indústria SAGA SENAI de Inovação:
 - [SISTEMA DE GERENCIAMENTO DE AVALIAÇÕES COMPORTAMENTAIS](https://plataforma.gpinovacao.senai.br/plataforma/demandas-da-industria/interna/12365?authuser=1)  
 ---
+
+### Pitch do projeto:
+- https://canva.link/plataforma-azuos
 
 ## Sobre o projeto
 ### Contextualização do projeto:
